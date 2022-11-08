@@ -1,16 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Webpack Starter Kit</title>
 </head>
+
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo">
-  
-  <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
+  <header>
+    <p id="text--user-message" class="text--user-message">Welcome, user!</p>
+    <h1>Overlook Hotel</h1>
+  </header>
+  <main>
+    <button id="button--book-room" class="button--book-room">Book a Room</button>
+
+
+
+
+    
+    <!--  -->
+    <section id="section--customer-stays" class="section--customer-stays">
+      <h2>Upcoming Stays</h2>
+      <table class="table--upcoming-stays">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Room Number</th>
+            <th>Confirmation</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody id="table--upcoming-stays-body">
+        </tbody>
+      </table>
+
+
+
+
+
+
+
+
+      <!-- insert a table here -->
+      <h3>Previous Stays</h3>
+      <table class="table--previous-stays">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Room Number</th>
+            <th>Confirmation</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody id="table--previous-stays-body">
+        </tbody>
+      </table>
+    </section>
+  </main>
   <script src="bundle.js"></script>
 
 </body>
+
 </html>
