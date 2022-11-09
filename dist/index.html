@@ -14,11 +14,11 @@
     <h1>Overlook Hotel</h1>
   </header>
   <main>
-    <button id="button--book-room" class="button--book-room">Book a Room</button>
-
-
+    
+    
     <!-- Start user upcoming bookings and previous bookings section -->
     <section id="section--customer-stays" class="section--customer-stays">
+      <button id="button--book-room" class="button--book-room">Book a Room</button>
       <h2>Upcoming Stays</h2>
       <table class="table--upcoming-stays">
         <thead>
@@ -49,8 +49,44 @@
       </table>
       <h5 id="text--previous-total" class="text--previous-total">Total: $100,000</h5>
     </section>
-<!-- End user upcoming bookings and previous bookings section -->
+    <!-- End user upcoming bookings and previous bookings section -->
 
+
+
+    <!-- Start of book a new room section -->
+    <section id="section--new-booking" class="section--new-booking">
+      <h3>Book a Room</h3>
+      <container id="container--make-new-booking" class="container--make-new-booking">
+        <container class="container--date-picker">
+          <label>Which night?</label>
+          <input id="input--date-selection" placeholder="select a date" type="date">
+        </container>
+        <!-- Rename the divs and classes below -->
+        <div class="dropdown">
+          <button class="dropbtn">Select a room</button>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div>
+        <button id="button--book-it" class="button-book-it">Book it!</button>
+        <!-- Rename the divs and classes above-->
+      </container>
+    </section>
+
+
+    <!-- End of book a new room section -->
+
+    <!-- Start of confirmation/apology section  -->
+    <section>
+
+
+
+    </section>
+
+
+    <!-- End of confirmation/apology section -->
 
   </main>
   <script src="bundle.js"></script>
