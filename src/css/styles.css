@@ -12,9 +12,7 @@ body {
   
 }
 
-header {
-  background-color: rgb(244, 234, 218);
-}
+
 
 h1 {
   display: flex;
@@ -26,7 +24,18 @@ h2, h3 {
   justify-content: center;
 }
 
-.section--customer-stays {
+header {
+  background-color: rgb(244, 234, 218);
+}
+
+
+/* .section--customer-stays {
+
+} */
+
+.text--previous-total, .text--upcoming-total {
+  display: flex;
+  justify-content: center;
 
 }
 
