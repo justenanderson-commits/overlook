@@ -1,5 +1,6 @@
 // Are imports going to be necessary here?
 // customerId
+import { displayBookingConfirmation, displayFierceApology } from './scripts'
 
 const getAllCustomers = () => {
   return fetch('http://localhost:3001/api/v1/customers')
@@ -44,14 +45,21 @@ const addNewBooking = () => {
   return fetch('http://localhost:3001/api/v1/bookings', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ "userID": 48, "date": "2022/12/01", "roomNumber": 4 })
+    body: JSON.stringify({ "userID": 1000, "date": "2022/12/01", "roomNumber": 4 })
   })
-    .then(response => response.json())
+    .then(response => { 
+      if (!response.ok) {
+        throw new Error('Ah, shucks. The post failed for some reason.')
+      }
+      return response.json()
+  })
     .then(data => {
+      // displayBookingConfirmation()
       // Add callback function here
       console.log(data)
     })
     .catch(error => {
+      // displayFierceApology()
       // Add callback function here
       console.log(error)
     });

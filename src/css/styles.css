@@ -68,7 +68,9 @@ background-color: rgb(42, 81, 166);
   justify-content: center;
 }
 
-
+.hidden {
+  display: none;
+}
 
 
 
