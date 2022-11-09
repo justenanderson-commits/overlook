@@ -1,42 +1,45 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS (SCSS) file
-// An example of how you tell webpack to use an 
-// image (also need to link to it in the index.html)
-
 //Imports
 import './css/styles.css';
 import './images/turing-logo.png'
 import { getAllCustomers, getSingleCustomer, getAllBookings, addNewBooking } from './api-calls';
 
 //Global Variables
-console.log('This is the JavaScript entry file - your code begins here.');
+let allCustomers, customer, allBookings
 
-let allCustomers = getAllCustomers()
-let customer = getSingleCustomer(1)
-let allBookings = getAllBookings()
-addNewBooking()
+// addNewBooking()
 
 
 // Query Selectors
 
 
-// Promises
+// Promises - REMOVE HARD CODING WHEN THESE ARE WORKING:
+const allPromises = () => { 
+  Promise.all([getAllCustomers(), getSingleCustomer(48), getAllBookings()])
+  .then(data => {
+    allCustomers = data[0]
+    customer = data[1]
+    allBookings = data[2]
+  })
+}
+window.addEventListener('load', allPromises)
 
+console.log('This should be allCustomer data: ', allCustomers)
+console.log('Customer 48 data on line 46: ', customer)
+console.log('All bookings: ', allBookings)
 
 // Event Listeners
 
-
 // Helper Functions
+
 const show = element => element.classList.remove('hidden')
 const hide = element => element.classList.add('hidden')
 const randomIndex = array => Math.floor(Math.random() * array.length)
 // Update this with the correct query selector once it's built
 const loadUser = () => userWelcome.innerHTML = `<p>Welcome, ${user.name}!</p>`
 
-// const displayBookingConfirmation = () => {}
-// const displayFierceApology = () => console.log('This is a fierce apology.')
+// Need to figure out why these aren't being imported
+const displayBookingConfirmation = () => (console.log('This is a confirmation message.'))
+const displayFierceApology = () => console.log('This is a fierce apology.')
 
 
 // export { displayBookingConfirmation, displayBookingConfirmation }

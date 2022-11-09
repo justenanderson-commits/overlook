@@ -1,6 +1,6 @@
 // Are imports going to be necessary here?
 // customerId
-import { displayBookingConfirmation, displayFierceApology } from './scripts'
+// import { displayBookingConfirmation, displayFierceApology } from './scripts'
 
 const getAllCustomers = () => {
   return fetch('http://localhost:3001/api/v1/customers')
@@ -20,7 +20,8 @@ const getSingleCustomer = (customerId) => {
     .then(response => response.json())
     .then(data => {
       // Add callback function here
-      console.log(data)
+      console.log('Data from getSingleCustomer api call: ', data)
+      return data
     })
     .catch(error => {
       // Add callback function here
@@ -41,11 +42,13 @@ const getAllBookings = () => {
     });
 }
 
+// Will need to add parameters to addNewBooking function to make it dynamic
 const addNewBooking = () => {
   return fetch('http://localhost:3001/api/v1/bookings', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ "userID": 1000, "date": "2022/12/01", "roomNumber": 4 })
+    // Will need to pass in arguments to make the body dynamic
+    body: JSON.stringify({ "userID": 48, "date": "2022/11/23", "roomNumber": 4 })
   })
     .then(response => { 
       if (!response.ok) {
