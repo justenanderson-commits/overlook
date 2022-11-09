@@ -7,7 +7,7 @@ const getAllCustomers = () => {
     .then(response => response.json())
     .then(data => {
       // Add callback function here
-      console.log(data)
+      console.log('Data from api call: ', data)
     })
     .catch(error => {
       // Add callback function here
@@ -20,7 +20,7 @@ const getSingleCustomer = (customerId) => {
     .then(response => response.json())
     .then(data => {
       // Add callback function here
-      console.log('Data from getSingleCustomer api call: ', data)
+      console.log('Data from api call: ', data)
       return data
     })
     .catch(error => {
@@ -34,7 +34,7 @@ const getAllBookings = () => {
     .then(response => response.json())
     .then(data => {
       // Add callback function here
-      console.log(data)
+      console.log('Data from api call: ', data)
     })
     .catch(error => {
       // Add callback function here

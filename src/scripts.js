@@ -13,6 +13,7 @@ let allCustomers, customer, allBookings
 
 
 // Promises - REMOVE HARD CODING WHEN THESE ARE WORKING:
+// Currently I have an async problem. I can't utilize the variables assigned in the Promise.all because they are returning undefined when I do. I need to find a way to delay the continued execution of code until they are all resolved. My console logs show this very clearly in the dev tools because I am getting undefined for all variable assignments, but the api-calls console logs are working just fine...once they resolve. 
 const allPromises = () => { 
   Promise.all([getAllCustomers(), getSingleCustomer(48), getAllBookings()])
   .then(data => {
@@ -21,6 +22,7 @@ const allPromises = () => {
     allBookings = data[2]
   })
 }
+
 window.addEventListener('load', allPromises)
 
 console.log('This should be allCustomer data: ', allCustomers)
