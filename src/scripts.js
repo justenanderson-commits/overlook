@@ -4,7 +4,7 @@ import './images/turing-logo.png'
 import { getAllCustomers, getSingleCustomer, getAllBookings, addNewBooking } from './api-calls';
 
 //Global Variables
-let allCustomersData, customerData, allBookingsData
+let allCustomersData, customerData, allBookingsData, customer
 
 // addNewBooking()
 
@@ -22,6 +22,8 @@ const allPromises = () => {
     allCustomersData = data[0]
     customerData = data[1]
     allBookingsData = data[2]
+    // Fix this instantiation of customer
+    customer = new Customer(allCustomersData[randomIndex(allCustomersData)]);
   })
 }
 
