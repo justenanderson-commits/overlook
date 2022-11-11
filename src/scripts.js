@@ -3,12 +3,13 @@ import './css/styles.css';
 // Image import example
 import './images/turing-logo.png';
 // Will I need to add an API call for Rooms? Probably yes. A class? Maybe...
-import { getAllCustomers, getSingleCustomer, getAllBookings, addNewBooking } from './api-calls';
+import { getAllCustomers, getSingleCustomer, getAllBookings, getAllRooms, addNewBooking } from './api-calls';
 import Customer from './Customer';
 import Booking from './Booking';
+import Room from './Room';
 
 //Global Variables
-let allCustomersData, customerData, allBookingsData, customer, booking;
+let allCustomersData, customerData, allBookingsData, allRoomsData, customer, newBooking;
 
 // addNewBooking()
 
@@ -17,29 +18,39 @@ let allCustomersData, customerData, allBookingsData, customer, booking;
 
 
 // Promises - REMOVE HARD CODING WHEN THESE ARE WORKING:
-// Currently I have an async problem. I can't utilize the variables assigned in the Promise.all because they are returning undefined when I do. I need to find a way to delay the continued execution of code until they are all resolved. My console logs show this very clearly in the dev tools because I am getting undefined for all variable assignments, but the api-calls console logs are working just fine...once they resolve.
 
-// UPDATE: The solution is to instantiate a new class within the promise.all. 
-const allPromises = () => { 
-  Promise.all([getAllCustomers(), getSingleCustomer(48), getAllBookings()])
+// UPDATE: The solution is to instantiate a new class within the promise.all. I just gotta figure out how to do it.
+const onLoadPromises = () => { 
+  Promise.all([getSingleCustomer(48), getAllBookings(), getAllRooms()])
   .then(data => {
-    allCustomersData = data[0]
-    // customerData should now be hard-coded for Kaylee Herman. Remove the [47] and pass in the userID to make it dynamic.
-    customerData = data[1][47]
-    allBookingsData = data[2]
-    // Fix this instantiation of customer
-    // customer = new Customer(allCustomersData[randomIndex(allCustomersData)]);
-    booking = new Booking();
+    // customerData should now be hard-coded for Kaylee Herman. Remove the (48) and pass in the userID to make it dynamic.
+    customerData = data[0]
+    console.log('Customer Data: ', customerData)
+    customer = new Customer(customerData)
+    console.log('New Customer Object: ', customer)
+    // customer.getBookings(allBookingsData)
+
+    allBookingsData = data[1]
+
+    allRoomsData = data[2]
+    console.log('All rooms data: ', allRoomsData)
+    // allRoomsData.forEach(room => {
+    //   room = new Room(room)
+    // })
+    // Write then Call helper function to find old and new bookings
+    // Write then Call helper function to display the updated data
+    // console.log('This should be allCustomer data: ', allCustomersData)
   })
 }
 
+// Add helper to find old and new bookings for a single customer (as a method on the customer class?)
+// Add another helper to display the updated data
 
-console.log('This should be allCustomer data: ', allCustomersData)
-console.log('Customer 48 data on line 46: ', customerData)
 console.log('All bookings: ', allBookingsData)
+console.log('All rooms: ', allRoomsData)
 
 // Event Listeners
-window.addEventListener('load', allPromises)
+window.addEventListener('load', onLoadPromises)
 
 // Helper Functions
 
