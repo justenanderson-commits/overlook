@@ -1,18 +1,20 @@
 class Customer {
-  constructor(customerData) {
+  constructor(customerData, customerBookings) {
     this.id = customerData.id;
     this.name = customerData.name;
-    this.oldBookings = [];
-    this.newBookings = [];
+    this.newBookings;
+    this.oldBookings;
   }
 
-//   // Add method to get their bookings
-//   getOldBookings(allBookingsData) {
-// // filter bookings based on user id
+  getNewBookings(customerBookings) {
+    this.newBookings = customerBookings.filter(booking => booking.date >= '2022/11/11')
+    console.log('Upcoming bookings ', this.newBookings)
   }
 
-//   getNewBookings(allBookingsData)
-//   // filter bookings based on user id
-// }
+  getOldBookings(customerBookings) {
+    this.oldBookings = customerBookings.filter(booking => booking.date <= '2022/11/11')
+    console.log('Old bookings ', this.oldBookings)
+  }
+}
 
 export default Customer

@@ -25,20 +25,21 @@ const onLoadPromises = () => {
   .then(data => {
     // customerData should now be hard-coded for Kaylee Herman. Remove the (48) and pass in the userID to make it dynamic.
     customerData = data[0]
-    console.log('Customer Data: ', customerData)
-    customer = new Customer(customerData)
-    console.log('New Customer Object: ', customer)
-    // customer.getBookings(allBookingsData)
-
+    // console.log('Customer Data: ', customerData)
+    
     allBookingsData = data[1]
-    console.log('All bookings data: ', allBookingsData)
+    // console.log('All bookings data: ', allBookingsData)
     let customerBookings = allBookingsData.bookings.filter(booking => booking.userID === 48)
-    console.log('Customer Bookings: ', customerBookings)
-
-
+    // console.log('Customer Bookings: ', customerBookings)
+    
+    customer = new Customer(customerData, customerBookings)
+    console.log('New Customer Object: ', customer)
+    customer.getNewBookings(customerBookings)
+    customer.getOldBookings(customerBookings)
+    
 
     allRoomsData = data[2]
-    console.log('All rooms data: ', allRoomsData)
+    // console.log('All rooms data: ', allRoomsData)
     allRoomsData.rooms.forEach(room => {
       room = new Room(room)
     })
