@@ -31,12 +31,17 @@ const onLoadPromises = () => {
     // customer.getBookings(allBookingsData)
 
     allBookingsData = data[1]
+    console.log('All bookings data: ', allBookingsData)
+    let customerBookings = allBookingsData.bookings.filter(booking => booking.userID === 48)
+    console.log('Customer Bookings: ', customerBookings)
+
+
 
     allRoomsData = data[2]
     console.log('All rooms data: ', allRoomsData)
-    // allRoomsData.forEach(room => {
-    //   room = new Room(room)
-    // })
+    allRoomsData.rooms.forEach(room => {
+      room = new Room(room)
+    })
     // Write then Call helper function to find old and new bookings
     // Write then Call helper function to display the updated data
     // console.log('This should be allCustomer data: ', allCustomersData)
@@ -45,9 +50,6 @@ const onLoadPromises = () => {
 
 // Add helper to find old and new bookings for a single customer (as a method on the customer class?)
 // Add another helper to display the updated data
-
-console.log('All bookings: ', allBookingsData)
-console.log('All rooms: ', allRoomsData)
 
 // Event Listeners
 window.addEventListener('load', onLoadPromises)

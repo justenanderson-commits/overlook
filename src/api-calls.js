@@ -16,21 +16,6 @@ const getSingleCustomer = (customerId) => {
     });
 }
 
-const getAllCustomers = () => {
-  return fetch('http://localhost:3001/api/v1/customers')
-    .then(response => response.json())
-    .then(data => {
-      // Add callback function here
-      // console.log('All customer data from api call: ', data)
-      return data;
-    })
-    .catch(error => {
-      // Add callback function here
-      console.log(error)
-    });
-}
-
-
 const getAllBookings = () => {
   return fetch('http://localhost:3001/api/v1/bookings')
     .then(response => response.json())
@@ -50,7 +35,21 @@ const getAllRooms = () => {
     .then(response => response.json())
     .then(data => {
       // Add callback function here
-      console.log('Room data from api call: ', data)
+      // console.log('Room data from api call: ', data)
+      return data;
+    })
+    .catch(error => {
+      // Add callback function here
+      console.log(error)
+    });
+}
+
+const getAllCustomers = () => {
+  return fetch('http://localhost:3001/api/v1/customers')
+    .then(response => response.json())
+    .then(data => {
+      // Add callback function here
+      // console.log('All customer data from api call: ', data)
       return data;
     })
     .catch(error => {
