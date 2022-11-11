@@ -2,26 +2,13 @@
 // customerId
 // import { displayBookingConfirmation, displayFierceApology } from './scripts'
 
-const getAllCustomers = () => {
-  return fetch('http://localhost:3001/api/v1/customers')
-    .then(response => response.json())
-    .then(data => {
-      // Add callback function here
-      console.log('Data from api call: ', data)
-    })
-    .catch(error => {
-      // Add callback function here
-      console.log(error)
-    });
-}
-
 const getSingleCustomer = (customerId) => {
   return fetch(`http://localhost:3001/api/v1/customers/${customerId}`)
     .then(response => response.json())
     .then(data => {
       // Add callback function here
-      console.log('Data from api call: ', data)
-      return data
+      // console.log('Single customer data from api call: ', data)
+      return data;
     })
     .catch(error => {
       // Add callback function here
@@ -34,7 +21,36 @@ const getAllBookings = () => {
     .then(response => response.json())
     .then(data => {
       // Add callback function here
-      console.log('Data from api call: ', data)
+      // console.log('Bookings data from api call: ', data)
+      return data;
+    })
+    .catch(error => {
+      // Add callback function here
+      console.log(error)
+    });
+}
+
+const getAllRooms = () => {
+  return fetch('http://localhost:3001/api/v1/rooms')
+    .then(response => response.json())
+    .then(data => {
+      // Add callback function here
+      // console.log('Room data from api call: ', data)
+      return data;
+    })
+    .catch(error => {
+      // Add callback function here
+      console.log(error)
+    });
+}
+
+const getAllCustomers = () => {
+  return fetch('http://localhost:3001/api/v1/customers')
+    .then(response => response.json())
+    .then(data => {
+      // Add callback function here
+      // console.log('All customer data from api call: ', data)
+      return data;
     })
     .catch(error => {
       // Add callback function here
@@ -60,6 +76,7 @@ const addNewBooking = () => {
       // displayBookingConfirmation()
       // Add callback function here
       console.log(data)
+      return data;
     })
     .catch(error => {
       // displayFierceApology()
@@ -69,4 +86,4 @@ const addNewBooking = () => {
 }
 
 
-export { getAllCustomers, getSingleCustomer, getAllBookings, addNewBooking }
+export { getAllCustomers, getSingleCustomer, getAllBookings, getAllRooms, addNewBooking }
