@@ -6,6 +6,8 @@ class Customer {
     this.name = customerData.name;
     this.newBookings;
     this.oldBookings;
+    this.totalUpcomingCost = 0;
+    this.totalPreviousCost = 0;
   }
 
   getNewBookings(customerBookings) {
@@ -31,15 +33,16 @@ class Customer {
       return booking
     })
   }
-  // this.newBookings.forEach(booking => {
-  //   allRoomsData.rooms.find(room => booking.roomNumber === room.number).push(this.costOfNewBookings)
-  // })
 
-  // getCostOfEachOldBooking() {}
+  getTotalAmountToSpend() {
+    let total = this.newBookings.reduce((acc, booking) => acc + booking.price, 0)
+    this.totalUpcomingCost = total
+  }
 
-  // getTotalAmountToSpend() {}
-
-  // getTotalAmountSpent() {}
+  getTotalAmountSpent() {
+    let total = this.oldBookings.reduce((acc, booking) => acc + booking.price, 0)
+    this.totalPreviousCost = total
+  }
 };
 
 // Look at the newBookings array

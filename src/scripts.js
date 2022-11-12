@@ -18,10 +18,12 @@ let year = date.getFullYear();
 today = `${year}/${month}/${day}`;
 
 // Query Selectors
-const customerWelcome = document.getElementById('text--customer-message')
-
 const upcomingStaysTable = document.getElementById('table--upcoming-stays-body')
 const previousStaysTable = document.getElementById('table--previous-stays-body')
+
+const customerWelcome = document.getElementById('text--customer-message')
+const upcomingTotal = document.getElementById('text--upcoming-total')
+const previousTotal = document.getElementById('text--previous-total')
 
 
 // Promises - REMOVE HARD CODING WHEN THESE ARE WORKING:
@@ -50,8 +52,8 @@ const onLoadPromises = () => {
       customer.getOldBookings(customerBookings)
       customer.getCostOfEachNewBooking(allRoomsData)
       customer.getCostOfEachOldBooking(allRoomsData)
-      // customer.getTotalAmountToSpend()
-      // customer.getTotalAmountSpent()
+      customer.getTotalAmountToSpend()
+      customer.getTotalAmountSpent()
       customer.newBookings.forEach(booking => {
         upcomingStaysTable.innerHTML += `<tr>
         <td>${booking.date}</td>
@@ -70,8 +72,11 @@ const onLoadPromises = () => {
         </tr>`
       })
 
+      upcomingTotal.innerText += ` ${customer.totalUpcomingCost}`
+      previousTotal.innerText += ` ${customer.totalPreviousCost}`
+      
       console.log('Customer newBookings property: ', customer.newBookings)
-      console.log('Customer oldBookings property: ', customer.oldBookings)
+      // console.log('Customer oldBookings property: ', customer.oldBookings)
 
       
 
