@@ -30,7 +30,7 @@ const onLoadPromises = () => {
       allBookingsData = data[1]
       // console.log('All bookings data: ', allBookingsData)
       let customerBookings = allBookingsData.bookings.filter(booking => booking.userID === 48)
-      // console.log('Customer Bookings: ', customerBookings)
+      console.log('Customer Bookings: ', customerBookings)
 
       customer = new Customer(singleCustomerData)
       // console.log('New Customer Object: ', customer)
