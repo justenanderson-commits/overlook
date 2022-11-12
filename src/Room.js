@@ -6,7 +6,12 @@ class Room {
     this.BedSize = room.bedSize;
     this.numBeds = room.numBeds;
     this.costPerNight = room.costPerNight;
+    this.datesBooked = [];
   }
 }
 
 export default Room;
+
+    // DatesBoked with be an array of dates
+    // If the date requested is included in that array,
+    // The room will not be displayed/available for booking
