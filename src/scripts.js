@@ -8,7 +8,7 @@ import Booking from './Booking';
 import Room from './Room';
 
 //Global Variables
-let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today;
+let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today, bookableRooms;
 
 // Current date finder
 const date = new Date();
@@ -30,7 +30,7 @@ const previousStaysTable = document.getElementById('table--previous-stays-body')
 const onLoadPromises = () => {
   Promise.all([getSingleCustomer(48), getAllBookings(), getAllRooms()])
     .then(data => {
-      // singleCustomerData should now be hard-coded for Kaylee Herman. Remove the (48) and pass in the userID to make it dynamic.
+      // singleCustomerData is harded-coded
       singleCustomerData = data[0]
       // console.log('Customer Data: ', singleCustomerData)
 
@@ -46,7 +46,7 @@ const onLoadPromises = () => {
       customer.newBookings.forEach(booking => {
         upcomingStaysTable.innerHTML += `<tr>
         <td>${booking.date}</td>
-        <td>Add room</td>
+        <td>${booking.roomNumber}</td>
         <td>${booking.id}</td>
         <td>Add price</td>
         </tr>`
@@ -55,23 +55,39 @@ const onLoadPromises = () => {
       customer.oldBookings.forEach(booking => {
         previousStaysTable.innerHTML += `<tr>
         <td>${booking.date}</td>
-        <td>Add room</td>
+        <td>${booking.roomNumber}</td>
         <td>${booking.id}</td>
         <td>Add price</td>
         </tr>`
       })
 
-      // console.log('Customer newBookings property: ', customer.newBookings)
+      console.log('Customer newBookings property: ', customer.newBookings)
       // console.log('Customer oldBookings property: ', customer.oldBookings)
 
       allRoomsData = data[2]
+
+
+
+
+      // Use this section to drill down into the prices? And to add the dates booked for each room. 
+      bookableRooms = [];
       // console.log('All rooms data: ', allRoomsData)
       allRoomsData.rooms.forEach(room => {
         room = new Room(room)
-        loadCustomer()
+        bookableRooms.push(room)
       })
-    })
+      // console.log('Bookable rooms : ', bookableRooms)
+      
+      loadCustomer()
+  })
 }
+
+
+
+
+
+
+
 
 // Event Listeners
 window.addEventListener('load', onLoadPromises)
