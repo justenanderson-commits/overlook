@@ -13,6 +13,6 @@ class Customer {
   getOldBookings(customerBookings) {
     this.oldBookings = customerBookings.filter(booking => booking.date <= '2022/11/11')
   }
-}
+};
 
-export default Customer
+export default Customer;

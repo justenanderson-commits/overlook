@@ -25,7 +25,7 @@ const onLoadPromises = () => {
     .then(data => {
       // singleCustomerData should now be hard-coded for Kaylee Herman. Remove the (48) and pass in the userID to make it dynamic.
       singleCustomerData = data[0]
-      // console.log('Customer Data: ', singlesingleCustomerData)
+      console.log('Customer Data: ', singleCustomerData)
 
       allBookingsData = data[1]
       // console.log('All bookings data: ', allBookingsData)
@@ -44,6 +44,7 @@ const onLoadPromises = () => {
         <td>Add price</td>
         </tr>`
       })
+
       customer.oldBookings.forEach(booking => {
         previousStaysTable.innerHTML += `<tr>
         <td>${booking.date}</td>
@@ -53,16 +54,8 @@ const onLoadPromises = () => {
         </tr>`
       })
 
-
-
-      // // Finish this to add the table contents
-      // upcomingStaysTable.innerHTML = 
-
-
-
       console.log('Customer newBookings property: ', customer.newBookings)
       console.log('Customer oldBookings property: ', customer.oldBookings)
-
 
       allRoomsData = data[2]
       // console.log('All rooms data: ', allRoomsData)
