@@ -45,9 +45,5 @@ class Customer {
   }
 };
 
-// Look at the newBookings array
-// For each newBooking, search through the allRoomsData for the costPerNight (find) and return it
-// Push the found costPerNight into an empy array
-// Use reduce to find the total amount spent and assign it to the new customer object
 
 export default Customer;
