@@ -34,7 +34,8 @@ class Customer {
 
   getTotalAmountToSpend() {
     let total = this.newBookings.reduce((acc, booking) => acc + booking.price, 0)
-    this.totalUpcomingCost = total
+    let finalTotal = parseFloat(total.toFixed(2))
+    this.totalUpcomingCost = finalTotal
   }
 
   getTotalAmountSpent() {
