@@ -8,16 +8,14 @@ import Booking from './Booking';
 import Room from './Room';
 
 //Global Variables
-let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings;
+let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today;
 
+// Current date finder
 const date = new Date();
 let day = date.getDate();
 let month = date.getMonth() + 1;
 let year = date.getFullYear();
-
-// This arrangement can be altered based on how we want the date's format to appear.
-let today = `${year}-${month}-${day}`;
-console.log('Today: ', today)
+today = `${year}/${month}/${day}`;
 
 // Query Selectors
 const customerWelcome = document.getElementById('text--customer-message')
@@ -63,7 +61,7 @@ const onLoadPromises = () => {
         </tr>`
       })
 
-      console.log('Customer newBookings property: ', customer.newBookings)
+      // console.log('Customer newBookings property: ', customer.newBookings)
       // console.log('Customer oldBookings property: ', customer.oldBookings)
 
       allRoomsData = data[2]
@@ -93,7 +91,7 @@ const loadCustomer = () => customerWelcome.innerHTML = `<p>Welcome, ${customer.n
 const displayBookingConfirmation = () => (console.log('This is a confirmation message.'))
 const displayFierceApology = () => console.log('This is a fierce apology.')
 
-
+export default today;
 
 
 

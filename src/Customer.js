@@ -1,5 +1,7 @@
+import today from './scripts'
+
 class Customer {
-  constructor(customerData) {
+  constructor(customerData, today) {
     this.id = customerData.id;
     this.name = customerData.name;
     this.newBookings;
@@ -7,11 +9,11 @@ class Customer {
   }
 
   getNewBookings(customerBookings) {
-    this.newBookings = customerBookings.filter(booking => booking.date >= '2022/11/11')
+    this.newBookings = customerBookings.filter(booking => booking.date >= today)
   }
 
   getOldBookings(customerBookings) {
-    this.oldBookings = customerBookings.filter(booking => booking.date <= '2022/11/11')
+    this.oldBookings = customerBookings.filter(booking => booking.date <= today)
   }
 };
 
