@@ -2,7 +2,6 @@ import { expect } from 'chai';
 import Customer from '../src/Customer';
 import { customer48, cust48UpcomingBookings, cust48PreviousBookings, cust48AllBookings } from '../test-data/customer-test-data';
 
-
 describe('Customer', () => {
   let customer;
   beforeEach(() => {

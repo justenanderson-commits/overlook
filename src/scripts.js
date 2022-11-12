@@ -10,6 +10,11 @@ import Room from './Room';
 //Global Variables
 let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings;
 
+// let dateNow = Date.now()
+// let today = dateNow.toLocaleString()
+let today = new Date(Date.now()).toISOString();
+console.log('Today: ', today)
+
 // Query Selectors
 const customerWelcome = document.getElementById('text--customer-message')
 
@@ -25,12 +30,12 @@ const onLoadPromises = () => {
     .then(data => {
       // singleCustomerData should now be hard-coded for Kaylee Herman. Remove the (48) and pass in the userID to make it dynamic.
       singleCustomerData = data[0]
-      console.log('Customer Data: ', singleCustomerData)
+      // console.log('Customer Data: ', singleCustomerData)
 
       allBookingsData = data[1]
       // console.log('All bookings data: ', allBookingsData)
       let customerBookings = allBookingsData.bookings.filter(booking => booking.userID === 48)
-      console.log('Customer Bookings: ', customerBookings)
+      // console.log('Customer Bookings: ', customerBookings)
 
       customer = new Customer(singleCustomerData)
       // console.log('New Customer Object: ', customer)
@@ -55,7 +60,7 @@ const onLoadPromises = () => {
       })
 
       console.log('Customer newBookings property: ', customer.newBookings)
-      console.log('Customer oldBookings property: ', customer.oldBookings)
+      // console.log('Customer oldBookings property: ', customer.oldBookings)
 
       allRoomsData = data[2]
       // console.log('All rooms data: ', allRoomsData)
