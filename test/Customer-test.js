@@ -4,11 +4,17 @@ import { customer48, cust48UpcomingBookings, cust48PreviousBookings, cust48AllBo
 
 
 describe('Customer', () => {
-  let customer;
+  let customer, today;
   beforeEach(() => {
+    const date = new Date();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    today = `${year}/${month}/${day}`;
+
     customer = new Customer(customer48)
-    customer.getNewBookings(cust48AllBookings)
-    customer.getOldBookings(cust48AllBookings)
+    customer.getNewBookings(cust48AllBookings, today)
+    customer.getOldBookings(cust48AllBookings, today)
   })
 
   it('should be a function', () => {

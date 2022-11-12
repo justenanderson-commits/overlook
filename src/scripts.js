@@ -39,17 +39,14 @@ const onLoadPromises = () => {
       allBookingsData = data[1]
       allRoomsData = data[2]
       // console.log('All bookings data: ', allBookingsData)
+
       let customerBookings = allBookingsData.bookings.filter(booking => booking.userID === 48)
       console.log('Customer Bookings: ', customerBookings)
 
-
-
-
-
       customer = new Customer(singleCustomerData)
       // console.log('New Customer Object: ', customer)
-      customer.getNewBookings(customerBookings)
-      customer.getOldBookings(customerBookings)
+      customer.getNewBookings(customerBookings, today)
+      customer.getOldBookings(customerBookings, today)
       customer.getCostOfEachNewBooking(allRoomsData)
       customer.getCostOfEachOldBooking(allRoomsData)
       customer.getTotalAmountToSpend()
@@ -76,18 +73,8 @@ const onLoadPromises = () => {
       previousTotal.innerText += ` ${customer.totalPreviousCost}`
       
       console.log('Customer newBookings property: ', customer.newBookings)
-      // console.log('Customer oldBookings property: ', customer.oldBookings)
+      console.log('Customer oldBookings property: ', customer.oldBookings)
 
-      
-
-      // Rooms data has cost per night
-      // For each booking, I need to seach each room in allRoomsData to find the matching room number, then return the costPerNight
-      // costPerNight will then be passed into the innerHTML of the booking to update my table.
-
-
-
-
-      // Use this section to drill down into the prices? And to add the dates booked for each room. 
       bookableRooms = [];
       // console.log('All rooms data: ', allRoomsData)
       allRoomsData.rooms.forEach(room => {
@@ -104,9 +91,6 @@ const onLoadPromises = () => {
 
 
 
-
-
-
 // Event Listeners
 window.addEventListener('load', onLoadPromises)
 
@@ -114,10 +98,6 @@ window.addEventListener('load', onLoadPromises)
 const show = element => element.classList.remove('hidden')
 const hide = element => element.classList.add('hidden')
 const loadCustomer = () => customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
-
-
-
-
 
 
 
