@@ -10,9 +10,13 @@ import Room from './Room';
 //Global Variables
 let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings;
 
-// let dateNow = Date.now()
-// let today = dateNow.toLocaleString()
-let today = new Date(Date.now()).toISOString();
+const date = new Date();
+let day = date.getDate();
+let month = date.getMonth() + 1;
+let year = date.getFullYear();
+
+// This arrangement can be altered based on how we want the date's format to appear.
+let today = `${year}-${month}-${day}`;
 console.log('Today: ', today)
 
 // Query Selectors
