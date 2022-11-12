@@ -49,7 +49,7 @@ const onLoadPromises = () => {
       customer.getNewBookings(customerBookings)
       customer.getOldBookings(customerBookings)
       customer.getCostOfEachNewBooking(allRoomsData)
-      // customer.getCostOfEachOldBooking()
+      customer.getCostOfEachOldBooking(allRoomsData)
       // customer.getTotalAmountToSpend()
       // customer.getTotalAmountSpent()
       customer.newBookings.forEach(booking => {
@@ -57,7 +57,7 @@ const onLoadPromises = () => {
         <td>${booking.date}</td>
         <td>${booking.roomNumber}</td>
         <td>${booking.id}</td>
-        <td>Add price</td>
+        <td>${booking.price}</td>
         </tr>`
       })
 
@@ -66,7 +66,7 @@ const onLoadPromises = () => {
         <td>${booking.date}</td>
         <td>${booking.roomNumber}</td>
         <td>${booking.id}</td>
-        <td>Add price</td>
+        <td>${booking.price}</td>
         </tr>`
       })
 

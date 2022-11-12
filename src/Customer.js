@@ -22,16 +22,19 @@ class Customer {
       booking['price'] = foundRoom.costPerNight
       return booking
     })
-
-
-
-    console.log('newBookings after: ', this.newBookings)
-
   }
-    // this.newBookings.forEach(booking => {
-    //   allRoomsData.rooms.find(room => booking.roomNumber === room.number).push(this.costOfNewBookings)
-    // })
-  
+
+  getCostOfEachOldBooking(allRoomsData) {
+    this.oldBookings.map(booking => {
+      let foundRoom = allRoomsData.rooms.find(room => room.number === booking.roomNumber)
+      booking['price'] = foundRoom.costPerNight
+      return booking
+    })
+  }
+  // this.newBookings.forEach(booking => {
+  //   allRoomsData.rooms.find(room => booking.roomNumber === room.number).push(this.costOfNewBookings)
+  // })
+
   // getCostOfEachOldBooking() {}
 
   // getTotalAmountToSpend() {}
