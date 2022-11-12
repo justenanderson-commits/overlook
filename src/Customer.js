@@ -9,7 +9,7 @@ class Customer {
   }
 
   getNewBookings(customerBookings) {
-    this.newBookings = customerBookings.filter(booking => booking.date >= today)
+    this.newBookings = customerBookings.filter(booking => booking.date > today)
   }
 
   getOldBookings(customerBookings) {

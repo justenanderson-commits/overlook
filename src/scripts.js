@@ -38,7 +38,7 @@ const onLoadPromises = () => {
       allRoomsData = data[2]
       // console.log('All bookings data: ', allBookingsData)
       let customerBookings = allBookingsData.bookings.filter(booking => booking.userID === 48)
-      // console.log('Customer Bookings: ', customerBookings)
+      console.log('Customer Bookings: ', customerBookings)
 
 
 
@@ -70,8 +70,8 @@ const onLoadPromises = () => {
         </tr>`
       })
 
-      // console.log('Customer newBookings property: ', customer.newBookings)
-      // console.log('Customer oldBookings property: ', customer.oldBookings)
+      console.log('Customer newBookings property: ', customer.newBookings)
+      console.log('Customer oldBookings property: ', customer.oldBookings)
 
       
 
