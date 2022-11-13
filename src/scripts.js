@@ -34,9 +34,6 @@ const bookRoomButton = document.getElementById('button--book-room')
 userID = 48
 
 
-
-
-
 // Promises - REMOVE HARD CODING WHEN THESE ARE WORKING:
 const onLoadPromises = () => {
   Promise.all([getSingleCustomer(userID), getAllBookings(), getAllRooms()])
@@ -45,11 +42,11 @@ const onLoadPromises = () => {
       singleCustomerData = data[0]
       // console.log('Customer Data: ', singleCustomerData)
 
-      allBookingsData = data[1]
+      allBookingsData = data[1].bookings
+      console.log('All bookings data: ', allBookingsData)
       allRoomsData = data[2].rooms
-      // console.log('All bookings data: ', allBookingsData)
 
-      let customerBookings = allBookingsData.bookings.filter(booking => booking.userID === userID)
+      let customerBookings = allBookingsData.filter(booking => booking.userID === userID)
       // console.log('Customer Bookings: ', customerBookings)
 
       customer = new Customer(singleCustomerData)
@@ -87,9 +84,19 @@ const onLoadPromises = () => {
       // console.log('All rooms data: ', allRoomsData)
       allRoomsData.forEach(room => {
         room = new Room(room)
+        room.getDatesBooked(allBookingsData)
         bookableRooms.push(room)
       })
-      // console.log('Bookable rooms : ', bookableRooms)
+      console.log('Updated bookable rooms array with dates booked: ', bookableRooms)
+      // bookableRooms.forEach(room => {
+      //   allBookingsData.forEach(booking => {
+      //     if (booking.roomNumber === room.number) {
+      //       room.datesBooked.push(booking.date)
+      //     }
+      //   })
+      // })
+      // console.log('Updated bookable rooms array with dates booked: ', bookableRooms)
+      
       
       loadCustomer()
       // hide(newBookingSection)    
@@ -109,7 +116,8 @@ const onLoadPromises = () => {
   }
 
   const filterRoomsByDate = (event) => {
-    selectedDate = event.target.value
+    // selectedDate = event.target.value
+    selectedDate = '2022/11/23'
     
     // The captured date should then be passed into a function that filters out all rooms NOT available on that date, and returns that array
     // The DOM should then be updated with the list (table) of available rooms
@@ -133,20 +141,15 @@ const onLoadPromises = () => {
     filterRoomsByDate(event)
 });
   
-  
-  
-  
-  
 
 
 
-
-
-
-// Need to figure out why these aren't being imported
+// Need to figure out why these aren't being imported....?
 const displayBookingConfirmation = () => (console.log('This is a confirmation message.'))
 const displayFierceApology = () => console.log('This is a fierce apology.')
 
+
+// Maybe delete this:
 export default today;
 
 

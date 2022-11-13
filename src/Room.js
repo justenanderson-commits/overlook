@@ -8,6 +8,17 @@ class Room {
     this.costPerNight = room.costPerNight;
     this.datesBooked = [];
   }
+
+  getDatesBooked(allBookingsData) {
+    // bookableRooms.forEach(room => {
+      allBookingsData.forEach(booking => {
+        if (booking.roomNumber === this.number) {
+          this.datesBooked.push(booking.date)
+        }
+      })
+    // })
+
+  }
 }
 
 export default Room;
