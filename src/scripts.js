@@ -90,28 +90,54 @@ const onLoadPromises = () => {
       // console.log('Bookable rooms : ', bookableRooms)
       
       loadCustomer()
-      hide(newBookingSection)
+      // hide(newBookingSection)    
     })
   }
-// Delete this stuff:
-const consoleCheck = () => console.log('This worked')
+  
+  // Delete this stuff:
+  const consoleCheck = () => console.log('This worked')
+  
+  // Helper Functions
+  const show = element => element.classList.remove('hidden')
+  const hide = element => element.classList.add('hidden')
+  const loadCustomer = () => customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
+  const displayNewBookingSection = () => {
+    hide(customerDashboard)
+    show(newBookingSection)
+  }
+  
+  const filterRoomsByDate = (selectedDate) => {
+    // When a customer selects a date, its value needs to be captured
+    // The captured date should then be passed into a function that filters out all rooms NOT available on that date, and returns that array
+    // The DOM should then be updated with the list (table) of available rooms
+    // This console log isn't working yet:
+    console.log(selectedDate.value)
+  }
 
-// Helper Functions
-const show = element => element.classList.remove('hidden')
-const hide = element => element.classList.add('hidden')
-const loadCustomer = () => customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
-const displayNewBookingSection = () => {
+
+
+// Delete this:
   hide(customerDashboard)
-  show(newBookingSection)
-}
+
 
 // Event Listeners
 window.addEventListener('load', onLoadPromises)
 bookRoomButton.addEventListener('click', displayNewBookingSection)
-selectedDate.addEventListener('change', consoleCheck)
+
+selectedDate.addEventListener('change', filterRoomsByDate)
+
 selectRoomButton.addEventListener('click', consoleCheck)
 bookItButton.addEventListener('click', consoleCheck)  
-  
+
+
+
+
+
+
+
+
+
+
 
 // Need to figure out why these aren't being imported
 const displayBookingConfirmation = () => (console.log('This is a confirmation message.'))
