@@ -23,11 +23,14 @@ const previousStaysTable = document.getElementById('table--previous-stays-body')
 const customerWelcome = document.getElementById('text--customer-message')
 const upcomingTotal = document.getElementById('text--upcoming-total')
 const previousTotal = document.getElementById('text--previous-total')
+const selectedDate = document.getElementById('input--date-selection')
+
+// Customer inputs
+userID = 48
+// selectedDate
 
 
 // Promises - REMOVE HARD CODING WHEN THESE ARE WORKING:
-userID = 48
-
 const onLoadPromises = () => {
   Promise.all([getSingleCustomer(userID), getAllBookings(), getAllRooms()])
     .then(data => {
@@ -70,11 +73,11 @@ const onLoadPromises = () => {
 
       upcomingTotal.innerText += ` $${customer.totalUpcomingCost}`
       previousTotal.innerText += ` $${customer.totalPreviousCost}`
-      console.log('Customer newBookings property: ', customer.newBookings)
-      console.log('Customer oldBookings property: ', customer.oldBookings)
+      // console.log('Customer newBookings property: ', customer.newBookings)
+      // console.log('Customer oldBookings property: ', customer.oldBookings)
 
       bookableRooms = [];
-      console.log('All rooms data: ', allRoomsData)
+      // console.log('All rooms data: ', allRoomsData)
       allRoomsData.forEach(room => {
         room = new Room(room)
         bookableRooms.push(room)
