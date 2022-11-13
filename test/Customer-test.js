@@ -36,4 +36,26 @@ describe('Customer', () => {
   it('should have an array of previous bookings', () => {
     expect(customer.oldBookings).to.deep.equal(cust48PreviousBookings)
   })
+
+  it('should have a method that finds all new bookings', () => {
+    expect(customer.getNewBookings(cust48AllBookings, today)).to.deep.equal(cust48UpcomingBookings)
+  })
+
+  it('should have a method that finds all old bookings', () => {
+    expect(customer.getOldBookings(cust48AllBookings, today)).to.deep.equal(cust48PreviousBookings)
+  })
+
+
+
+
+
+  it('should have an array of previous bookings', () => {
+    expect(customer.oldBookings).to.deep.equal(cust48PreviousBookings)
+  })
+
+  it('should have an array of previous bookings', () => {
+    expect(customer.oldBookings).to.deep.equal(cust48PreviousBookings)
+  })
+
+
 })

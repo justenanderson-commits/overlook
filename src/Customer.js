@@ -9,11 +9,15 @@ class Customer {
   }
 
   getNewBookings(customerBookings, today) {
-    this.newBookings = customerBookings.filter(booking => booking.date > today)
+    let newBookings = customerBookings.filter(booking => booking.date > today)
+    this.newBookings = newBookings
+    return newBookings
   }
 
   getOldBookings(customerBookings, today) {
-    this.oldBookings = customerBookings.filter(booking => booking.date <= '2022/11/11')
+    let oldBookings = customerBookings.filter(booking => booking.date <= '2022/11/11')
+    this.oldBookings = oldBookings
+    return oldBookings
   }
 
   getCostOfEachNewBooking(allRoomsData) {
