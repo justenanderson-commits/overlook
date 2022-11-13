@@ -18,16 +18,21 @@ let year = date.getFullYear();
 today = `${year}/${month}/${day}`;
 
 // Query Selectors
+const customerDashboard = document.getElementById('section--customer-dashboard')
+const newBookingSection = document.getElementById('section--new-booking')
 const upcomingStaysTable = document.getElementById('table--upcoming-stays-body')
 const previousStaysTable = document.getElementById('table--previous-stays-body')
 const customerWelcome = document.getElementById('text--customer-message')
 const upcomingTotal = document.getElementById('text--upcoming-total')
 const previousTotal = document.getElementById('text--previous-total')
 const selectedDate = document.getElementById('input--date-selection')
+const selectRoomButton = document.getElementById('button--select-room')
+const bookItButton = document.getElementById('button--book-it')
+const bookRoomButton = document.getElementById('button--book-room')
 
 // Customer inputs
 userID = 48
-// selectedDate
+
 
 
 // Promises - REMOVE HARD CODING WHEN THESE ARE WORKING:
@@ -75,7 +80,7 @@ const onLoadPromises = () => {
       previousTotal.innerText += ` $${customer.totalPreviousCost}`
       // console.log('Customer newBookings property: ', customer.newBookings)
       // console.log('Customer oldBookings property: ', customer.oldBookings)
-
+      
       bookableRooms = [];
       // console.log('All rooms data: ', allRoomsData)
       allRoomsData.forEach(room => {
@@ -85,22 +90,28 @@ const onLoadPromises = () => {
       // console.log('Bookable rooms : ', bookableRooms)
       
       loadCustomer()
-  })
-}
-
-
-
-
-
-// Event Listeners
-window.addEventListener('load', onLoadPromises)
+      hide(newBookingSection)
+    })
+  }
+// Delete this stuff:
+const consoleCheck = () => console.log('This worked')
 
 // Helper Functions
 const show = element => element.classList.remove('hidden')
 const hide = element => element.classList.add('hidden')
 const loadCustomer = () => customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
+const displayNewBookingSection = () => {
+  hide(customerDashboard)
+  show(newBookingSection)
+}
 
-
+// Event Listeners
+window.addEventListener('load', onLoadPromises)
+bookRoomButton.addEventListener('click', displayNewBookingSection)
+selectedDate.addEventListener('change', consoleCheck)
+selectRoomButton.addEventListener('click', consoleCheck)
+bookItButton.addEventListener('click', consoleCheck)  
+  
 
 // Need to figure out why these aren't being imported
 const displayBookingConfirmation = () => (console.log('This is a confirmation message.'))
