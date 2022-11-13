@@ -36,7 +36,7 @@ const onLoadPromises = () => {
       // console.log('Customer Data: ', singleCustomerData)
 
       allBookingsData = data[1]
-      allRoomsData = data[2]
+      allRoomsData = data[2].rooms
       // console.log('All bookings data: ', allBookingsData)
 
       let customerBookings = allBookingsData.bookings.filter(booking => booking.userID === userID)
@@ -70,12 +70,12 @@ const onLoadPromises = () => {
 
       upcomingTotal.innerText += ` $${customer.totalUpcomingCost}`
       previousTotal.innerText += ` $${customer.totalPreviousCost}`
-      // console.log('Customer newBookings property: ', customer.newBookings)
-      // console.log('Customer oldBookings property: ', customer.oldBookings)
+      console.log('Customer newBookings property: ', customer.newBookings)
+      console.log('Customer oldBookings property: ', customer.oldBookings)
 
       bookableRooms = [];
-      // console.log('All rooms data: ', allRoomsData)
-      allRoomsData.rooms.forEach(room => {
+      console.log('All rooms data: ', allRoomsData)
+      allRoomsData.forEach(room => {
         room = new Room(room)
         bookableRooms.push(room)
       })

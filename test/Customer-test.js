@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import Customer from '../src/Customer';
-import { customer48, cust48UpcomingBookings, cust48PreviousBookings, cust48AllBookings } from '../test-data/customer-test-data';
+import { customer48, cust48UpcomingBookings, cust48PreviousBookings, cust48AllBookings, allRoomsData, bookingsWithUpcomingCost, bookingsWithPreviousCost } from '../test-data/customer-test-data';
 
 
 describe('Customer', () => {
@@ -45,17 +45,19 @@ describe('Customer', () => {
     expect(customer.getOldBookings(cust48AllBookings, today)).to.deep.equal(cust48PreviousBookings)
   })
 
-
-
-
-
-  it('should have an array of previous bookings', () => {
-    expect(customer.oldBookings).to.deep.equal(cust48PreviousBookings)
+  it('should have a method that find the cost of upcoming bookings', () => {
+    expect(customer.getCostOfEachNewBooking(allRoomsData)).to.deep.equal(bookingsWithUpcomingCost)
   })
 
-  it('should have an array of previous bookings', () => {
-    expect(customer.oldBookings).to.deep.equal(cust48PreviousBookings)
+  it('should have a method that find the cost of Previous bookings', () => {
+    expect(customer.getCostOfEachOldBooking(allRoomsData)).to.deep.equal(bookingsWithPreviousCost)
   })
 
+  it('should have a method that finds the total upcoming cost', () => {
+    expect(customer.getTotalAmountToSpend()).to.deep.equal(581.77)
+  })
 
+  it('should have a method that finds the total amount spent on previous bookings', () => {
+    expect(customer.getTotalAmountSpent()).to.deep.equal(5827.02)
+  })
 })

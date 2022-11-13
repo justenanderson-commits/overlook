@@ -21,31 +21,36 @@ class Customer {
   }
 
   getCostOfEachNewBooking(allRoomsData) {
-    this.newBookings.map(booking => {
-      let foundRoom = allRoomsData.rooms.find(room => room.number === booking.roomNumber)
+    let bookingsWithUpcomingCost = this.newBookings.map(booking => {
+      let foundRoom = allRoomsData.find(room => room.number === booking.roomNumber)
       booking['price'] = foundRoom.costPerNight
       return booking
     })
+    
+    return bookingsWithUpcomingCost
   }
 
   getCostOfEachOldBooking(allRoomsData) {
-    this.oldBookings.map(booking => {
-      let foundRoom = allRoomsData.rooms.find(room => room.number === booking.roomNumber)
+    let bookingsWithPreviousCost = this.oldBookings.map(booking => {
+      let foundRoom = allRoomsData.find(room => room.number === booking.roomNumber)
       booking['price'] = foundRoom.costPerNight
       return booking
     })
+    return bookingsWithPreviousCost
   }
 
   getTotalAmountToSpend() {
     let total = this.newBookings.reduce((acc, booking) => acc + booking.price, 0)
     let finalTotal = parseFloat(total.toFixed(2))
     this.totalUpcomingCost = finalTotal
+    return finalTotal
   }
 
   getTotalAmountSpent() {
     let total = this.oldBookings.reduce((acc, booking) => acc + booking.price, 0)
     let finalTotal = parseFloat(total.toFixed(2))
     this.totalPreviousCost = finalTotal
+    return finalTotal
   }
 };
 
