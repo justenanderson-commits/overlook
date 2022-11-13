@@ -8,7 +8,7 @@ import Booking from './Booking';
 import Room from './Room';
 
 //Global Variables
-let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today, bookableRooms;
+let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today, bookableRooms, userID;
 
 // Current date finder
 const date = new Date();
@@ -20,36 +20,32 @@ today = `${year}/${month}/${day}`;
 // Query Selectors
 const upcomingStaysTable = document.getElementById('table--upcoming-stays-body')
 const previousStaysTable = document.getElementById('table--previous-stays-body')
-
 const customerWelcome = document.getElementById('text--customer-message')
 const upcomingTotal = document.getElementById('text--upcoming-total')
 const previousTotal = document.getElementById('text--previous-total')
 
 
 // Promises - REMOVE HARD CODING WHEN THESE ARE WORKING:
+userID = 48
 
-// UPDATE: The solution is to instantiate a new class within the promise.all. I just gotta figure out how to do it.
 const onLoadPromises = () => {
-  Promise.all([getSingleCustomer(48), getAllBookings(), getAllRooms()])
+  Promise.all([getSingleCustomer(userID), getAllBookings(), getAllRooms()])
     .then(data => {
       // singleCustomerData is harded-coded
       singleCustomerData = data[0]
       // console.log('Customer Data: ', singleCustomerData)
 
       allBookingsData = data[1]
-      allRoomsData = data[2]
+      allRoomsData = data[2].rooms
       // console.log('All bookings data: ', allBookingsData)
-      let customerBookings = allBookingsData.bookings.filter(booking => booking.userID === 48)
-      console.log('Customer Bookings: ', customerBookings)
 
-
-
-
+      let customerBookings = allBookingsData.bookings.filter(booking => booking.userID === userID)
+      // console.log('Customer Bookings: ', customerBookings)
 
       customer = new Customer(singleCustomerData)
       // console.log('New Customer Object: ', customer)
-      customer.getNewBookings(customerBookings)
-      customer.getOldBookings(customerBookings)
+      customer.getNewBookings(customerBookings, today)
+      customer.getOldBookings(customerBookings, today)
       customer.getCostOfEachNewBooking(allRoomsData)
       customer.getCostOfEachOldBooking(allRoomsData)
       customer.getTotalAmountToSpend()
@@ -72,25 +68,14 @@ const onLoadPromises = () => {
         </tr>`
       })
 
-      upcomingTotal.innerText += ` ${customer.totalUpcomingCost}`
-      previousTotal.innerText += ` ${customer.totalPreviousCost}`
-      
+      upcomingTotal.innerText += ` $${customer.totalUpcomingCost}`
+      previousTotal.innerText += ` $${customer.totalPreviousCost}`
       console.log('Customer newBookings property: ', customer.newBookings)
-      // console.log('Customer oldBookings property: ', customer.oldBookings)
+      console.log('Customer oldBookings property: ', customer.oldBookings)
 
-      
-
-      // Rooms data has cost per night
-      // For each booking, I need to seach each room in allRoomsData to find the matching room number, then return the costPerNight
-      // costPerNight will then be passed into the innerHTML of the booking to update my table.
-
-
-
-
-      // Use this section to drill down into the prices? And to add the dates booked for each room. 
       bookableRooms = [];
-      // console.log('All rooms data: ', allRoomsData)
-      allRoomsData.rooms.forEach(room => {
+      console.log('All rooms data: ', allRoomsData)
+      allRoomsData.forEach(room => {
         room = new Room(room)
         bookableRooms.push(room)
       })
@@ -104,9 +89,6 @@ const onLoadPromises = () => {
 
 
 
-
-
-
 // Event Listeners
 window.addEventListener('load', onLoadPromises)
 
@@ -114,10 +96,6 @@ window.addEventListener('load', onLoadPromises)
 const show = element => element.classList.remove('hidden')
 const hide = element => element.classList.add('hidden')
 const loadCustomer = () => customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
-
-
-
-
 
 
 

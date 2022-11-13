@@ -1,5 +1,3 @@
-import today from './scripts'
-
 class Customer {
   constructor(customerData, today) {
     this.id = customerData.id;
@@ -10,38 +8,49 @@ class Customer {
     this.totalPreviousCost = 0;
   }
 
-  getNewBookings(customerBookings) {
-    this.newBookings = customerBookings.filter(booking => booking.date > today)
+  getNewBookings(customerBookings, today) {
+    let newBookings = customerBookings.filter(booking => booking.date > today)
+    this.newBookings = newBookings
+    return newBookings
   }
 
-  getOldBookings(customerBookings) {
-    this.oldBookings = customerBookings.filter(booking => booking.date <= today)
+  getOldBookings(customerBookings, today) {
+    let oldBookings = customerBookings.filter(booking => booking.date <= '2022/11/11')
+    this.oldBookings = oldBookings
+    return oldBookings
   }
 
   getCostOfEachNewBooking(allRoomsData) {
-    this.newBookings.map(booking => {
-      let foundRoom = allRoomsData.rooms.find(room => room.number === booking.roomNumber)
+    let bookingsWithUpcomingCost = this.newBookings.map(booking => {
+      let foundRoom = allRoomsData.find(room => room.number === booking.roomNumber)
       booking['price'] = foundRoom.costPerNight
       return booking
     })
+    
+    return bookingsWithUpcomingCost
   }
 
   getCostOfEachOldBooking(allRoomsData) {
-    this.oldBookings.map(booking => {
-      let foundRoom = allRoomsData.rooms.find(room => room.number === booking.roomNumber)
+    let bookingsWithPreviousCost = this.oldBookings.map(booking => {
+      let foundRoom = allRoomsData.find(room => room.number === booking.roomNumber)
       booking['price'] = foundRoom.costPerNight
       return booking
     })
+    return bookingsWithPreviousCost
   }
 
   getTotalAmountToSpend() {
     let total = this.newBookings.reduce((acc, booking) => acc + booking.price, 0)
-    this.totalUpcomingCost = total
+    let finalTotal = parseFloat(total.toFixed(2))
+    this.totalUpcomingCost = finalTotal
+    return finalTotal
   }
 
   getTotalAmountSpent() {
     let total = this.oldBookings.reduce((acc, booking) => acc + booking.price, 0)
-    this.totalPreviousCost = total
+    let finalTotal = parseFloat(total.toFixed(2))
+    this.totalPreviousCost = finalTotal
+    return finalTotal
   }
 };
 
