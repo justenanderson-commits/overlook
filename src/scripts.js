@@ -8,7 +8,7 @@ import Booking from './Booking';
 import Room from './Room';
 
 //Global Variables
-let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today, bookableRooms, userID;
+let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today, bookableRooms, userID, selectedDate;
 
 // Current date finder
 const date = new Date();
@@ -25,13 +25,15 @@ const previousStaysTable = document.getElementById('table--previous-stays-body')
 const customerWelcome = document.getElementById('text--customer-message')
 const upcomingTotal = document.getElementById('text--upcoming-total')
 const previousTotal = document.getElementById('text--previous-total')
-const selectedDate = document.getElementById('input--date-selection')
+const dateSelector = document.getElementById('input--date-selection')
 const selectRoomButton = document.getElementById('button--select-room')
 const bookItButton = document.getElementById('button--book-it')
 const bookRoomButton = document.getElementById('button--book-room')
 
 // Customer inputs
 userID = 48
+
+
 
 
 
@@ -105,34 +107,36 @@ const onLoadPromises = () => {
     hide(customerDashboard)
     show(newBookingSection)
   }
-  
-  const filterRoomsByDate = (selectedDate) => {
-    // When a customer selects a date, its value needs to be captured
+
+  const filterRoomsByDate = (event) => {
+    selectedDate = event.target.value
+    
     // The captured date should then be passed into a function that filters out all rooms NOT available on that date, and returns that array
     // The DOM should then be updated with the list (table) of available rooms
     // This console log isn't working yet:
-    console.log(selectedDate.value)
+    console.log('Selected date from filterRoomsByDate: ', selectedDate)
   }
-
-
-
-// Delete this:
+  
+  
+  
+  // Delete this:
   hide(customerDashboard)
+  
+  
 
-
-// Event Listeners
-window.addEventListener('load', onLoadPromises)
-bookRoomButton.addEventListener('click', displayNewBookingSection)
-
-selectedDate.addEventListener('change', filterRoomsByDate)
-
-selectRoomButton.addEventListener('click', consoleCheck)
-bookItButton.addEventListener('click', consoleCheck)  
-
-
-
-
-
+  // Event Listeners
+  window.addEventListener('load', onLoadPromises)
+  bookRoomButton.addEventListener('click', displayNewBookingSection)  
+  selectRoomButton.addEventListener('click', consoleCheck)
+  bookItButton.addEventListener('click', consoleCheck)  
+  dateSelector.addEventListener('input', (event) => {
+    filterRoomsByDate(event)
+});
+  
+  
+  
+  
+  
 
 
 
