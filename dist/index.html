@@ -1,22 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Overlook Hotel</title>
 </head>
-
 <body>
   <header>
     <p id="text--customer-message" class="text--customer-message">Welcome, customer!</p>
     <h1>Overlook Hotel</h1>
   </header>
   <main>
-
-
-    <!-- Start customer dashboard section -->
     <section id="section--customer-dashboard" class="section--customer-dashboard">
       <button id="button--book-room" class="button--book-room">Book a Room</button>
       <h2>Upcoming Stays</h2>
@@ -46,18 +41,12 @@
       </table>
       <h5 id="text--previous-total" class="text--previous-total">Total: </h5>
     </section>
-    <!-- End customer dashboard section -->
-
-
-
-    <!-- Start of book a new room section -->
     <section id="section--new-booking" class="section--new-booking">
       <h3>Book a Room</h3>
       <container id="container--make-new-booking" class="container--make-new-booking">
         <container class="container--date-picker">
           <label>Which night?</label>
-          <input id="input--date-selection" placeholder="select a date" type="date" required>
-          <!-- <form action="/action_page.php"> -->
+          <input id="input--date-selection" min="" placeholder="select a date" type="date" required>
           <form id="form--room-filter">
             <label for="roomTypeFilter">Filter by room type:</label>
             <select name="roomTypeFilter" id="button--room-type-drop-down">
@@ -86,16 +75,7 @@
           </tbody>
       </container>
     </section>
-
-    <!-- Start of confirmation/apology section????????????  -->
-    <section>
-      
-    </section>
-    <!-- End of confirmation/apology section???????????? -->
-
   </main>
   <script src="bundle.js"></script>
-
 </body>
-
 </html>

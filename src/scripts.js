@@ -1,9 +1,8 @@
 //Imports
 import './css/styles.css';
 import './images/turing-logo.png';
-import { getAllCustomers, getSingleCustomer, getAllBookings, getAllRooms, addNewBooking } from './api-calls';
+import { getSingleCustomer, getAllBookings, getAllRooms, addNewBooking } from './api-calls';
 import Customer from './Customer';
-import Booking from './Booking';
 import Room from './Room';
 
 
@@ -12,18 +11,18 @@ let singleCustomerData, allBookingsData, allRoomsData, customer, today, bookable
 
 
 // Current date finder
-const date = new Date();
-let day = date.getDate();
-let month = date.getMonth() + 1;
-let year = date.getFullYear();
-today = `${year}/${month}/${day}`;
+const date = new Date()
+let day = date.getDate()
+let month = date.getMonth() + 1
+let year = date.getFullYear()
+today = `${year}/${month}/${day}`
 
 
 // Query Selectors
 const customerDashboard = document.getElementById('section--customer-dashboard')
 const newBookingSection = document.getElementById('section--new-booking')
 const noRoomsAvailableSection = document.getElementById('section--no-rooms-available')
-const newBookingContainer = document.getElementById('container--make-new-booking')
+// const newBookingContainer = document.getElementById('container--make-new-booking')
 const upcomingStaysTable = document.getElementById('table--upcoming-stays-body')
 const previousStaysTable = document.getElementById('table--previous-stays-body')
 const availableRoomsTableHead = document.getElementById('table--available-rooms-head')
@@ -42,7 +41,7 @@ const juniorSuiteButton = document.getElementById('button--junior-suite')
 const regularSuiteButton = document.getElementById('button--regular-suite')
 const residentialSuiteButton = document.getElementById('button--residential-suite')
 
-//  These 2 event listeners may be unnecessary
+// //  These 2 event listeners may be unnecessary
 const bookRoomButton = document.getElementById('button--book-room')
 const filterRoomTypeForm = document.getElementById('form--room-filter')
 
@@ -96,6 +95,7 @@ const onLoadPromises = () => {
       loadCustomer()
       hide(newBookingSection)
       hide(availableRoomsTableBody)
+      dateSelector.min = `${year}-${month}-${day}`
     })
 }
 
