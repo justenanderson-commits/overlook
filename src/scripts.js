@@ -9,7 +9,7 @@ import Room from './Room';
 
 
 //Global Variables
-let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today, bookableRooms, userID, selectedDate, bookedRooms, filteredRoomsByDate, filteredRoomsByType;
+let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today, bookableRooms, userID, selectedDate, bookedRooms, filteredRoomsByDate, filteredRoomsByType, customerBookings
 
 
 // Current date finder
@@ -60,7 +60,7 @@ const onLoadPromises = () => {
       singleCustomerData = data[0]
       allBookingsData = data[1].bookings
       allRoomsData = data[2].rooms
-      let customerBookings = allBookingsData.filter(booking => booking.userID === userID)
+      customerBookings = allBookingsData.filter(booking => booking.userID === userID)
       customer = new Customer(singleCustomerData)
       customer.getNewBookings(customerBookings, today)
       customer.getOldBookings(customerBookings, today)
@@ -68,6 +68,7 @@ const onLoadPromises = () => {
       customer.getCostOfEachOldBooking(allRoomsData)
       customer.getTotalAmountToSpend()
       customer.getTotalAmountSpent()
+      upcomingStaysTable.innerHTML = ''
       customer.newBookings.forEach(booking => {
         upcomingStaysTable.innerHTML += `<tr>
         <td>${booking.date}</td>
@@ -76,6 +77,7 @@ const onLoadPromises = () => {
         <td>${booking.price}</td>
         </tr>`
       })
+      previousStaysTable.innerHTML = ''
       customer.oldBookings.forEach(booking => {
         previousStaysTable.innerHTML += `<tr>
         <td>${booking.date}</td>
@@ -84,8 +86,8 @@ const onLoadPromises = () => {
         <td>${booking.price}</td>
         </tr>`
       })
-      upcomingTotal.innerText += ` $${customer.totalUpcomingCost}`
-      previousTotal.innerText += ` $${customer.totalPreviousCost}`
+      upcomingTotal.innerText = ` $${customer.totalUpcomingCost}`
+      previousTotal.innerText = ` $${customer.totalPreviousCost}`
       bookableRooms = [];
       allRoomsData.forEach(room => {
         room = new Room(room)
@@ -139,6 +141,7 @@ const showAvailableRooms = (event) => {
     show(availableRoomsTableHead)
     show(availableRoomsTableBody)
     show(filterRoomTypeForm)
+    availableRoomsTableBody.innerHTML = ''
     filteredRoomsByDate.forEach(room => {
       availableRoomsTableBody.innerHTML += `
         <tr>
@@ -206,18 +209,53 @@ dateSelector.addEventListener('input', (event) => {
 });
 roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
 
+// const updateBookingsData = (customerBookings, today, allRoomsData) => {
+//   allBookingsData = data[1].bookings
+//   customerBookings = allBookingsData.filter(booking => booking.userID === userID)
+//   customer.getNewBookings(customerBookings, today)
+//   customer.getOldBookings(customerBookings, today)
+//   customer.getCostOfEachNewBooking(allRoomsData)
+//   customer.getCostOfEachOldBooking(allRoomsData)
+//   customer.getTotalAmountToSpend()
+//   customer.getTotalAmountSpent()
+//   customer.newBookings.forEach(booking => {
+//     upcomingStaysTable.innerHTML = ''
+//     upcomingStaysTable.innerHTML += `<tr>
+//         <td>${booking.date}</td>
+//         <td>${booking.roomNumber}</td>
+//         <td>${booking.id}</td>
+//         <td>${booking.price}</td>
+//         </tr>`
+//   })
+//   customer.oldBookings.forEach(booking => {
+//     previousStaysTable.innerHTML = ''
+//     previousStaysTable.innerHTML += `<tr>
+//         <td>${booking.date}</td>
+//         <td>${booking.roomNumber}</td>
+//         <td>${booking.id}</td>
+//         <td>${booking.price}</td>
+//         </tr>`
+//   })
+//   upcomingTotal.innerText += ` $${customer.totalUpcomingCost}`
+//   previousTotal.innerText += ` $${customer.totalPreviousCost}`
+// }
 
 const createNewBooking = (event) => {
   let newBooking = {
-  'userID': userID,
-  'date': selectedDate,  
-  'roomNumber': +event.target.dataset.room
+    'userID': userID,
+    'date': selectedDate,
+    'roomNumber': +event.target.dataset.room
   }
   console.log(newBooking)
+  // This only posts
   addNewBooking(newBooking)
+  // Add a get here
+  // updateBookingsData()
+  onLoadPromises()
+  show(customerDashboard)
 }
 
-const consoleCheck = () => console.log('This works')  
+const consoleCheck = () => console.log('This works')
 availableRoomsTableBody.addEventListener('click', createNewBooking)
 
 
