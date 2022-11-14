@@ -32,6 +32,7 @@ const availableRoomsTableBody = document.getElementById('table--available-rooms-
 const customerWelcome = document.getElementById('text--customer-message')
 const upcomingTotal = document.getElementById('text--upcoming-total')
 const previousTotal = document.getElementById('text--previous-total')
+const noRoomsMessage = document.getElementById('text--no-rooms-available')
 const dateSelector = document.getElementById('input--date-selection')
 const selectRoomButton = document.getElementById('button--select-room')
 const bookItButton = document.getElementById('button--book-it')
@@ -110,7 +111,8 @@ const displayNewBookingSection = () => {
   hide(filterRoomTypeForm)
   hide(availableRoomsTableBody)
   hide(availableRoomsTableHead)
-  hide(noRoomsAvailableSection)
+  hide(noRoomsMessage)
+  // hide(noRoomsAvailableSection)
   show(newBookingSection)
 }
 
@@ -131,10 +133,8 @@ const showAvailableRooms = (event) => {
   getFilteredRoomsByDate(event)
   if (filteredRoomsByDate.length === 0) {
     hide(availableRoomsTableHead)
-
-    // Hide more stuff here
-
-    // show(noRoomsAvailableSection)
+    hide(availableRoomsTableBody)
+    show(noRoomsMessage)
   } else {
     show(availableRoomsTableHead)
     show(availableRoomsTableBody)
@@ -164,22 +164,22 @@ const getFilteredRoomsByType = (event) => {
   //   console.log('Idk what is going on')
   //   show(noRoomsAvailableSection)
   // } else {
-    return filteredRoomsByType
+  return filteredRoomsByType
   // }
 }
 
 const showFilteredRoomsByType = (event) => {
   getFilteredRoomsByType(event)
-//  IDK why this isn't working very well...
+  if (filteredRoomsByType.length === 0) {
+    hide(availableRoomsTableHead)
+    hide(availableRoomsTableBody)
+    show(noRoomsMessage)
 
-  // if (filteredRoomsByType.length === 0) {
-  //   // hide(newBookingContainer)
-  //   hide(availableRoomsTableHead)
-  //   show(noRoomsAvailableSection)
-  // } else
-   if (event.target.value != 'any') {
-    availableRoomsTableBody.innerHTML = ''
+  } else if (event.target.value != 'any') {
+    hide(noRoomsMessage)
+    show(availableRoomsTableHead)
     show(availableRoomsTableBody)
+    availableRoomsTableBody.innerHTML = ''
     filteredRoomsByType.forEach(room => {
       availableRoomsTableBody.innerHTML += `
         <tr>
