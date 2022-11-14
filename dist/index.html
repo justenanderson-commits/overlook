@@ -57,22 +57,36 @@
         <container class="container--date-picker">
           <label>Which night?</label>
           <input id="input--date-selection" placeholder="select a date" type="date" required>
+          <!-- <form action="/action_page.php"> -->
+            <form id="form--room-filter">
+            <label for="roomTypeFilter">Filter by room type:</label>
+            <select name="roomTypeFilter" id="button--room-type-drop-down">
+              <option value="any">Any Available Room</option>
+              <option value="single room">Single Room</option>
+              <option value="junior suite">Junior Suite</option>
+              <option value="regular suite">Regular Suite</option>
+              <option value="residential suite">Residential Suite</option>
+            </select>
+            <!-- <br><br>
+            <input type="submit" value="Submit"> -->
+          </form>         
+          
+          <!-- <div class="dropdown">
+            <button class="dropbtn" type="input">Room Type</button>
+            <div class="dropdown-content">
+              <a id="button--any-room">Any</a>
+              <a id="button--single-room" value="single room">single room</a>
+              <a id="button--junior-suite">Junior Suite</a>
+              <a id="button--regular-suite">Suite</a>
+              <a id="button--residential suite">Residential Suite</a>
+            </div>
+          </div> -->
         </container>
         <table class="table--available-rooms">
           <thead id="table--available-rooms-body">
             <tr>
               <th>Room</th>
-              <th>
-                <div class="dropdown">
-                  <button class="dropbtn">Room Type</button>
-                  <div class="dropdown-content">
-                    <a href="#">Single Room</a>
-                    <a href="#">Junior Suite</a>
-                    <a href="#">Suite</a>
-                    <a href="#">Residential Suite</a>
-                  </div>
-                </div>
-              </th>
+              <th>Type</th>
               <th>Has Bidet</th>
               <th>Bed Size</th>
               <th>Bed Count</th>

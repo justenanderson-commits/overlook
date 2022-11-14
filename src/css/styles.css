@@ -1,6 +1,6 @@
-* {
+/* * {
   border: 2px rgb(130, 147, 147) solid;
-}
+} */
 
 body {
   background: linear-gradient(180deg, #ffffff, #bbbbbb);
@@ -72,6 +72,7 @@ background-color: rgb(42, 81, 166);
 .hidden {
   display: none;
 }
+
 
 
 
