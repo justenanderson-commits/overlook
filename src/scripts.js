@@ -174,7 +174,6 @@ const showFilteredRoomsByType = (event) => {
     hide(availableRoomsTableHead)
     hide(availableRoomsTableBody)
     show(noRoomsMessage)
-
   } else if (event.target.value != 'any') {
     hide(noRoomsMessage)
     show(availableRoomsTableHead)
@@ -192,6 +191,7 @@ const showFilteredRoomsByType = (event) => {
           <td><button id="button--select-room">Select</button></td>
         </tr>`
     })
+
   } else {
     availableRoomsTableBody.innerHTML = ''
     showAvailableRooms(event)
