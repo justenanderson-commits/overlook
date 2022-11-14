@@ -38,18 +38,18 @@ header {
 }
 
 .section--customer-dashboard {
-background-color: rgb(42, 81, 166);
+background-color: rgb(148, 152, 160);
 }
 
 .section--new-booking {
-  background-color: #04AA6D;
+  background-color: #676767;
 }
 .container--make-new-booking {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  background-color: rgb(199, 247, 231);
+  background-color: rgb(206, 209, 208);
 }
 
 .text--previous-total, .text--upcoming-total {

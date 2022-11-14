@@ -119,7 +119,7 @@ const displayNewBookingSection = () => {
 const getFilteredRoomsByDate = (event) => {
   let date = event.target.value
   let [year, month, day] = date.split('-');
-  let selectedDate = [year, month, day].join('/');
+  selectedDate = [year, month, day].join('/');
   filteredRoomsByDate = bookableRooms.filter(room => !room.datesBooked.includes(selectedDate))
   if (filteredRoomsByDate.length != 0) {
     return filteredRoomsByDate
@@ -148,7 +148,7 @@ const showAvailableRooms = (event) => {
           <td>${room.BedSize}</td>
           <td>${room.numBeds}</td>
           <td>$${room.costPerNight}</td>
-          <td><button id="button--select-room">Select</button></td>
+          <td><button id="button--select-room" data-room="${room.number}">Select</button></td>
         </tr>
         `
     })
@@ -207,8 +207,31 @@ dateSelector.addEventListener('input', (event) => {
 roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
 
 
+const createNewBooking = (event) => {
+  let newBooking = {
+  'userID': userID,
+  'date': selectedDate,  
+  'roomNumber': +event.target.dataset.room
+  }
+  console.log(newBooking)
+  addNewBooking(newBooking)
+}
+
+const consoleCheck = () => console.log('This works')  
+availableRoomsTableBody.addEventListener('click', createNewBooking)
+
+
+
+
+
+
+
 // Delete this:
 // hide(customerDashboard)
 
 // Maybe delete this:
 export default today;
+
+// event.target.dataset.room
+// Add event listener to parent element
+// Console.log the room number
