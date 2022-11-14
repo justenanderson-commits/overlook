@@ -59,12 +59,12 @@ const getAllCustomers = () => {
 }
 
 // Will need to add parameters to addNewBooking function to make it dynamic
-const addNewBooking = () => {
+const addNewBooking = (newBooking) => {
   return fetch('http://localhost:3001/api/v1/bookings', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     // Will need to pass in arguments to make the body dynamic
-    body: JSON.stringify({ "userID": 48, "date": "2022/11/23", "roomNumber": 4 })
+    body: JSON.stringify(newBooking)
   })
     .then(response => { 
       if (!response.ok) {

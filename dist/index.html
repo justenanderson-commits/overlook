@@ -14,29 +14,39 @@
     <h1>Overlook Hotel</h1>
   </header>
   <main>
-    
-    
-    <!-- Start customer upcoming bookings and previous bookings section -->
-    <section id="section--customer-stays" class="section--customer-stays">
+
+
+    <!-- Start customer dashboard section -->
+    <section id="section--customer-dashboard" class="section--customer-dashboard">
       <button id="button--book-room" class="button--book-room">Book a Room</button>
       <h2>Upcoming Stays</h2>
       <table class="table--upcoming-stays">
         <thead id="table--upcoming-stays-body">
-          <tr><th>Date</th><th>Room Number</th><th>Confirmation</th><th>Price</th></tr>
+          <tr>
+            <th>Date</th>
+            <th>Room Number</th>
+            <th>Confirmation</th>
+            <th>Price</th>
+          </tr>
         </thead>
 
       </table>
-      <h5 id="text--upcoming-total" class="text--upcoming-total">Total:  </h5>
+      <h5 id="text--upcoming-total" class="text--upcoming-total">Total: </h5>
 
       <h3>Previous Stays</h3>
       <table class="table--previous-stays">
         <thead id="table--previous-stays-body">
-          <tr><th>Date</th><th>Room Number</th><th>Confirmation</th><th>Price</th></tr>
+          <tr>
+            <th>Date</th>
+            <th>Room Number</th>
+            <th>Confirmation</th>
+            <th>Price</th>
+          </tr>
         </thead>
       </table>
       <h5 id="text--previous-total" class="text--previous-total">Total: </h5>
     </section>
-    <!-- End customer upcoming bookings and previous bookings section -->
+    <!-- End customer dashboard section -->
 
 
 
@@ -47,24 +57,39 @@
         <container class="container--date-picker">
           <label>Which night?</label>
           <input id="input--date-selection" placeholder="select a date" type="date" required>
+          <!-- <form action="/action_page.php"> -->
+          <form id="form--room-filter">
+            <label for="roomTypeFilter">Filter by room type:</label>
+            <select name="roomTypeFilter" id="button--room-type-drop-down">
+              <option value="any">Select room type</option>
+              <option value="single room">Single Room</option>
+              <option value="junior suite">Junior Suite</option>
+              <option value="regular suite">Regular Suite</option>
+              <option value="residential suite">Residential Suite</option>
+            </select>
+          </form>
         </container>
-        <!-- Rename the divs and classes below -->
-        <div class="dropdown" required>
-          <button class="dropbtn">Select a room</button>
-          <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
-        </div>
-        <button id="button--book-it" class="button-book-it">Book it!</button>
-        <!-- Rename the divs and classes above-->
+        <table class="table--available-rooms">
+          <thead id="table--available-rooms-head">
+            <tr>
+              <th>Room</th>
+              <th>Type</th>
+              <th>Has Bidet</th>
+              <th>Bed Size</th>
+              <th>Bed Count</th>
+              <th>Price</th>
+              <th>Book it</th>
+            </tr>
+          </thead>
+          <h4 id="text--no-rooms-available">We are fiercely sorry there are no rooms available.</h4>
+          <tbody id="table--available-rooms-body">
+          </tbody>
       </container>
     </section>
-    <!-- End of book a new room section -->
 
     <!-- Start of confirmation/apology section????????????  -->
     <section>
+      
     </section>
     <!-- End of confirmation/apology section???????????? -->
 

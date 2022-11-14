@@ -1,14 +1,15 @@
 //Imports
 import './css/styles.css';
-// Image import example
 import './images/turing-logo.png';
 import { getAllCustomers, getSingleCustomer, getAllBookings, getAllRooms, addNewBooking } from './api-calls';
 import Customer from './Customer';
 import Booking from './Booking';
 import Room from './Room';
 
+
 //Global Variables
-let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today, bookableRooms, userID;
+let singleCustomerData, allBookingsData, allRoomsData, customer, today, bookableRooms, userID, selectedDate, filteredRoomsByDate, filteredRoomsByType, customerBookings
+
 
 // Current date finder
 const date = new Date();
@@ -17,17 +18,37 @@ let month = date.getMonth() + 1;
 let year = date.getFullYear();
 today = `${year}/${month}/${day}`;
 
+
 // Query Selectors
+const customerDashboard = document.getElementById('section--customer-dashboard')
+const newBookingSection = document.getElementById('section--new-booking')
+const noRoomsAvailableSection = document.getElementById('section--no-rooms-available')
+const newBookingContainer = document.getElementById('container--make-new-booking')
 const upcomingStaysTable = document.getElementById('table--upcoming-stays-body')
 const previousStaysTable = document.getElementById('table--previous-stays-body')
+const availableRoomsTableHead = document.getElementById('table--available-rooms-head')
+const availableRoomsTableBody = document.getElementById('table--available-rooms-body')
 const customerWelcome = document.getElementById('text--customer-message')
 const upcomingTotal = document.getElementById('text--upcoming-total')
 const previousTotal = document.getElementById('text--previous-total')
-const selectedDate = document.getElementById('input--date-selection')
+const noRoomsMessage = document.getElementById('text--no-rooms-available')
+const dateSelector = document.getElementById('input--date-selection')
+const selectRoomButton = document.getElementById('button--select-room')
+const bookItButton = document.getElementById('button--book-it')
+const roomTypeDropDown = document.getElementById('button--room-type-drop-down')
+const anyRoomButton = document.getElementById('button--any-room')
+const singleRoomButton = document.getElementById('button--single-room')
+const juniorSuiteButton = document.getElementById('button--junior-suite')
+const regularSuiteButton = document.getElementById('button--regular-suite')
+const residentialSuiteButton = document.getElementById('button--residential-suite')
+
+//  These 2 event listeners may be unnecessary
+const bookRoomButton = document.getElementById('button--book-room')
+const filterRoomTypeForm = document.getElementById('form--room-filter')
+
 
 // Customer inputs
 userID = 48
-// selectedDate
 
 
 // Promises - REMOVE HARD CODING WHEN THESE ARE WORKING:
@@ -36,23 +57,17 @@ const onLoadPromises = () => {
     .then(data => {
       // singleCustomerData is harded-coded
       singleCustomerData = data[0]
-      // console.log('Customer Data: ', singleCustomerData)
-
-      allBookingsData = data[1]
+      allBookingsData = data[1].bookings
       allRoomsData = data[2].rooms
-      // console.log('All bookings data: ', allBookingsData)
-
-      let customerBookings = allBookingsData.bookings.filter(booking => booking.userID === userID)
-      // console.log('Customer Bookings: ', customerBookings)
-
+      customerBookings = allBookingsData.filter(booking => booking.userID === userID)
       customer = new Customer(singleCustomerData)
-      // console.log('New Customer Object: ', customer)
       customer.getNewBookings(customerBookings, today)
       customer.getOldBookings(customerBookings, today)
       customer.getCostOfEachNewBooking(allRoomsData)
       customer.getCostOfEachOldBooking(allRoomsData)
       customer.getTotalAmountToSpend()
       customer.getTotalAmountSpent()
+      upcomingStaysTable.innerHTML = ''
       customer.newBookings.forEach(booking => {
         upcomingStaysTable.innerHTML += `<tr>
         <td>${booking.date}</td>
@@ -61,7 +76,7 @@ const onLoadPromises = () => {
         <td>${booking.price}</td>
         </tr>`
       })
-
+      previousStaysTable.innerHTML = ''
       customer.oldBookings.forEach(booking => {
         previousStaysTable.innerHTML += `<tr>
         <td>${booking.date}</td>
@@ -70,43 +85,132 @@ const onLoadPromises = () => {
         <td>${booking.price}</td>
         </tr>`
       })
-
-      upcomingTotal.innerText += ` $${customer.totalUpcomingCost}`
-      previousTotal.innerText += ` $${customer.totalPreviousCost}`
-      // console.log('Customer newBookings property: ', customer.newBookings)
-      // console.log('Customer oldBookings property: ', customer.oldBookings)
-
+      upcomingTotal.innerText = ` $${customer.totalUpcomingCost}`
+      previousTotal.innerText = ` $${customer.totalPreviousCost}`
       bookableRooms = [];
-      // console.log('All rooms data: ', allRoomsData)
       allRoomsData.forEach(room => {
         room = new Room(room)
+        room.getDatesBooked(allBookingsData)
         bookableRooms.push(room)
       })
-      // console.log('Bookable rooms : ', bookableRooms)
-      
       loadCustomer()
-  })
+      hide(newBookingSection)
+      hide(availableRoomsTableBody)
+    })
 }
 
-
-
-
-
-// Event Listeners
-window.addEventListener('load', onLoadPromises)
 
 // Helper Functions
 const show = element => element.classList.remove('hidden')
 const hide = element => element.classList.add('hidden')
+
+
+// Other functions
 const loadCustomer = () => customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
+const displayNewBookingSection = () => {
+  hide(customerDashboard)
+  hide(filterRoomTypeForm)
+  hide(availableRoomsTableBody)
+  hide(availableRoomsTableHead)
+  hide(noRoomsMessage)
+  show(newBookingSection)
+}
 
+const getFilteredRoomsByDate = (event) => {
+  let date = event.target.value
+  let [year, month, day] = date.split('-');
+  selectedDate = [year, month, day].join('/');
+  filteredRoomsByDate = bookableRooms.filter(room => !room.datesBooked.includes(selectedDate))
+  if (filteredRoomsByDate.length != 0) {
+    return filteredRoomsByDate
+  } else {
+    show(noRoomsAvailableSection)
+  }
+}
 
+const showAvailableRooms = (event) => {
+  getFilteredRoomsByDate(event)
+  if (filteredRoomsByDate.length === 0) {
+    hide(availableRoomsTableHead)
+    hide(availableRoomsTableBody)
+    show(noRoomsMessage)
+  } else {
+    show(availableRoomsTableHead)
+    show(availableRoomsTableBody)
+    show(filterRoomTypeForm)
+    availableRoomsTableBody.innerHTML = ''
+    filteredRoomsByDate.forEach(room => {
+      availableRoomsTableBody.innerHTML += `
+        <tr>
+          <td>${room.number}</td>
+          <td>${room.roomType}</td>
+          <td>${room.bidet}</td>
+          <td>${room.BedSize}</td>
+          <td>${room.numBeds}</td>
+          <td>$${room.costPerNight}</td>
+          <td><button id="button--select-room" data-room="${room.number}">Select</button></td>
+        </tr>
+        `
+    })
+  }
+}
 
-// Need to figure out why these aren't being imported
-const displayBookingConfirmation = () => (console.log('This is a confirmation message.'))
-const displayFierceApology = () => console.log('This is a fierce apology.')
+const getFilteredRoomsByType = (event) => {
+  let roomType = event.target.value
+  filteredRoomsByType = filteredRoomsByDate.filter(room => roomType === room.roomType)
+  return filteredRoomsByType
+}
 
-export default today;
+const showFilteredRoomsByType = (event) => {
+  getFilteredRoomsByType(event)
+  if (filteredRoomsByType.length === 0) {
+    hide(availableRoomsTableHead)
+    hide(availableRoomsTableBody)
+    show(noRoomsMessage)
+  } else if (event.target.value != 'any') {
+    hide(noRoomsMessage)
+    show(availableRoomsTableHead)
+    show(availableRoomsTableBody)
+    availableRoomsTableBody.innerHTML = ''
+    filteredRoomsByType.forEach(room => {
+      availableRoomsTableBody.innerHTML += `
+        <tr>
+          <td>${room.number}</td>
+          <td>${room.roomType}</td>
+          <td>${room.bidet}</td>
+          <td>${room.BedSize}</td>
+          <td>${room.numBeds}</td>
+          <td>$${room.costPerNight}</td>
+          <td><button id="button--select-room">Select</button></td>
+        </tr>`
+    })
+
+  } else {
+    availableRoomsTableBody.innerHTML = ''
+    showAvailableRooms(event)
+  }
+}
+
+const createNewBooking = (event) => {
+  let newBooking = {
+    'userID': userID,
+    'date': selectedDate,
+    'roomNumber': +event.target.dataset.room
+  }
+  addNewBooking(newBooking)
+  onLoadPromises()
+  show(customerDashboard)
+}
+
+// Event Listeners
+window.addEventListener('load', onLoadPromises)
+bookRoomButton.addEventListener('click', displayNewBookingSection)
+dateSelector.addEventListener('input', (event) => {
+  showAvailableRooms(event)
+});
+roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
+availableRoomsTableBody.addEventListener('click', createNewBooking)
+
 
 
 
