@@ -22,7 +22,6 @@ today = `${year}/${month}/${day}`
 const customerDashboard = document.getElementById('section--customer-dashboard')
 const newBookingSection = document.getElementById('section--new-booking')
 const noRoomsAvailableSection = document.getElementById('section--no-rooms-available')
-// const newBookingContainer = document.getElementById('container--make-new-booking')
 const upcomingStaysTable = document.getElementById('table--upcoming-stays-body')
 const previousStaysTable = document.getElementById('table--previous-stays-body')
 const availableRoomsTableHead = document.getElementById('table--available-rooms-head')
@@ -32,16 +31,7 @@ const upcomingTotal = document.getElementById('text--upcoming-total')
 const previousTotal = document.getElementById('text--previous-total')
 const noRoomsMessage = document.getElementById('text--no-rooms-available')
 const dateSelector = document.getElementById('input--date-selection')
-const selectRoomButton = document.getElementById('button--select-room')
-const bookItButton = document.getElementById('button--book-it')
 const roomTypeDropDown = document.getElementById('button--room-type-drop-down')
-const anyRoomButton = document.getElementById('button--any-room')
-const singleRoomButton = document.getElementById('button--single-room')
-const juniorSuiteButton = document.getElementById('button--junior-suite')
-const regularSuiteButton = document.getElementById('button--regular-suite')
-const residentialSuiteButton = document.getElementById('button--residential-suite')
-
-// //  These 2 event listeners may be unnecessary
 const bookRoomButton = document.getElementById('button--book-room')
 const filterRoomTypeForm = document.getElementById('form--room-filter')
 
@@ -181,8 +171,7 @@ const showFilteredRoomsByType = (event) => {
           <td>${room.BedSize}</td>
           <td>${room.numBeds}</td>
           <td>$${room.costPerNight}</td>
-          <td><button id="button--select-room">Select</button></td>
-        </tr>`
+          <td><button id="button--select-room" data-room="${room.number}">Select</button></td>`
     })
 
   } else {
@@ -210,8 +199,3 @@ dateSelector.addEventListener('input', (event) => {
 });
 roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
 availableRoomsTableBody.addEventListener('click', createNewBooking)
-
-
-
-
-
