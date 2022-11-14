@@ -122,6 +122,7 @@ const getFilteredRoomsByDate = (event) => {
   if (filteredRoomsByDate.length != 0) {
     return filteredRoomsByDate
   } else {
+    console.log('This should not be firing but it is for some reason.')
     show(noRoomsAvailableSection)
   }
 }
@@ -133,7 +134,7 @@ const showAvailableRooms = (event) => {
 
     // Hide more stuff here
 
-    show(noRoomsAvailableSection)
+    // show(noRoomsAvailableSection)
   } else {
     show(availableRoomsTableHead)
     show(availableRoomsTableBody)
@@ -157,18 +158,26 @@ const showAvailableRooms = (event) => {
 const getFilteredRoomsByType = (event) => {
   let roomType = event.target.value
   filteredRoomsByType = filteredRoomsByDate.filter(room => roomType === room.roomType)
-  if (filteredRoomsByType.length === 0) {
-    hide(newBookingContainer)
-    hide(availableRoomsTableHead)
-    show(noRoomsAvailableSection)
-  } else {
+  // if (filteredRoomsByType.length === 0) {
+  //   hide(newBookingContainer)
+  //   hide(availableRoomsTableHead)
+  //   console.log('Idk what is going on')
+  //   show(noRoomsAvailableSection)
+  // } else {
     return filteredRoomsByType
-  }
+  // }
 }
 
 const showFilteredRoomsByType = (event) => {
   getFilteredRoomsByType(event)
-  if (event.target.value != 'any') {
+//  IDK why this isn't working very well...
+
+  // if (filteredRoomsByType.length === 0) {
+  //   // hide(newBookingContainer)
+  //   hide(availableRoomsTableHead)
+  //   show(noRoomsAvailableSection)
+  // } else
+   if (event.target.value != 'any') {
     availableRoomsTableBody.innerHTML = ''
     show(availableRoomsTableBody)
     filteredRoomsByType.forEach(room => {
@@ -203,7 +212,3 @@ roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
 
 // Maybe delete this:
 export default today;
-
-
-
-
