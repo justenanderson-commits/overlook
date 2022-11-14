@@ -1,6 +1,5 @@
 //Imports
 import './css/styles.css';
-// Image import example
 import './images/turing-logo.png';
 import { getAllCustomers, getSingleCustomer, getAllBookings, getAllRooms, addNewBooking } from './api-calls';
 import Customer from './Customer';
@@ -9,7 +8,7 @@ import Room from './Room';
 
 
 //Global Variables
-let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today, bookableRooms, userID, selectedDate, bookedRooms, filteredRoomsByDate, filteredRoomsByType, customerBookings
+let singleCustomerData, allBookingsData, allRoomsData, customer, today, bookableRooms, userID, selectedDate, filteredRoomsByDate, filteredRoomsByType, customerBookings
 
 
 // Current date finder
@@ -114,7 +113,6 @@ const displayNewBookingSection = () => {
   hide(availableRoomsTableBody)
   hide(availableRoomsTableHead)
   hide(noRoomsMessage)
-  // hide(noRoomsAvailableSection)
   show(newBookingSection)
 }
 
@@ -126,7 +124,6 @@ const getFilteredRoomsByDate = (event) => {
   if (filteredRoomsByDate.length != 0) {
     return filteredRoomsByDate
   } else {
-    console.log('This should not be firing but it is for some reason.')
     show(noRoomsAvailableSection)
   }
 }
@@ -161,14 +158,7 @@ const showAvailableRooms = (event) => {
 const getFilteredRoomsByType = (event) => {
   let roomType = event.target.value
   filteredRoomsByType = filteredRoomsByDate.filter(room => roomType === room.roomType)
-  // if (filteredRoomsByType.length === 0) {
-  //   hide(newBookingContainer)
-  //   hide(availableRoomsTableHead)
-  //   console.log('Idk what is going on')
-  //   show(noRoomsAvailableSection)
-  // } else {
   return filteredRoomsByType
-  // }
 }
 
 const showFilteredRoomsByType = (event) => {
@@ -201,6 +191,17 @@ const showFilteredRoomsByType = (event) => {
   }
 }
 
+const createNewBooking = (event) => {
+  let newBooking = {
+    'userID': userID,
+    'date': selectedDate,
+    'roomNumber': +event.target.dataset.room
+  }
+  addNewBooking(newBooking)
+  onLoadPromises()
+  show(customerDashboard)
+}
+
 // Event Listeners
 window.addEventListener('load', onLoadPromises)
 bookRoomButton.addEventListener('click', displayNewBookingSection)
@@ -208,68 +209,9 @@ dateSelector.addEventListener('input', (event) => {
   showAvailableRooms(event)
 });
 roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
-
-// const updateBookingsData = (customerBookings, today, allRoomsData) => {
-//   allBookingsData = data[1].bookings
-//   customerBookings = allBookingsData.filter(booking => booking.userID === userID)
-//   customer.getNewBookings(customerBookings, today)
-//   customer.getOldBookings(customerBookings, today)
-//   customer.getCostOfEachNewBooking(allRoomsData)
-//   customer.getCostOfEachOldBooking(allRoomsData)
-//   customer.getTotalAmountToSpend()
-//   customer.getTotalAmountSpent()
-//   customer.newBookings.forEach(booking => {
-//     upcomingStaysTable.innerHTML = ''
-//     upcomingStaysTable.innerHTML += `<tr>
-//         <td>${booking.date}</td>
-//         <td>${booking.roomNumber}</td>
-//         <td>${booking.id}</td>
-//         <td>${booking.price}</td>
-//         </tr>`
-//   })
-//   customer.oldBookings.forEach(booking => {
-//     previousStaysTable.innerHTML = ''
-//     previousStaysTable.innerHTML += `<tr>
-//         <td>${booking.date}</td>
-//         <td>${booking.roomNumber}</td>
-//         <td>${booking.id}</td>
-//         <td>${booking.price}</td>
-//         </tr>`
-//   })
-//   upcomingTotal.innerText += ` $${customer.totalUpcomingCost}`
-//   previousTotal.innerText += ` $${customer.totalPreviousCost}`
-// }
-
-const createNewBooking = (event) => {
-  let newBooking = {
-    'userID': userID,
-    'date': selectedDate,
-    'roomNumber': +event.target.dataset.room
-  }
-  console.log(newBooking)
-  // This only posts
-  addNewBooking(newBooking)
-  // Add a get here
-  // updateBookingsData()
-  onLoadPromises()
-  show(customerDashboard)
-}
-
-const consoleCheck = () => console.log('This works')
 availableRoomsTableBody.addEventListener('click', createNewBooking)
 
 
 
 
 
-
-
-// Delete this:
-// hide(customerDashboard)
-
-// Maybe delete this:
-export default today;
-
-// event.target.dataset.room
-// Add event listener to parent element
-// Console.log the room number
