@@ -11,13 +11,11 @@ class Room {
 
   getDatesBooked(allBookingsData) {
     // bookableRooms.forEach(room => {
-      allBookingsData.forEach(booking => {
-        if (booking.roomNumber === this.number) {
-          this.datesBooked.push(booking.date)
-        }
-      })
-    // })
-
+    allBookingsData.forEach(booking => {
+      if (booking.roomNumber === this.number) {
+        this.datesBooked.push(booking.date)
+      }
+    })
   }
 }
 

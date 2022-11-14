@@ -48,6 +48,7 @@ background-color: rgb(42, 81, 166);
 }
 .container--make-new-booking {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
   background-color: rgb(199, 247, 231);

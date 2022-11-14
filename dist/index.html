@@ -48,17 +48,11 @@
           <label>Which night?</label>
           <input id="input--date-selection" placeholder="select a date" type="date" required>
         </container>
-        <!-- Rename the divs and classes below -->
-        <div class="dropdown" required>
-          <button id="button--select-room" class="dropbtn">Select a room</button>
-          <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-          </div>
-        </div>
-        <button id="button--book-it" class="button-book-it">Book it!</button>
-        <!-- Rename the divs and classes above-->
+        <table class="table--available-rooms">
+          <thead id="table--available-rooms-body"> 
+            <tr><th>Room</th><th>Type</th><th>Has Bidet</th><th>Bed Size</th><th>Bed Count</th><th>Price</th><th>Book it</th></tr>
+          </thead>
+        
       </container>
     </section>
     <!-- End of book a new room section -->

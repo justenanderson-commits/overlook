@@ -8,7 +8,7 @@ import Booking from './Booking';
 import Room from './Room';
 
 //Global Variables
-let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today, bookableRooms, userID, selectedDate, bookedRooms;
+let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today, bookableRooms, userID, selectedDate, bookedRooms, filteredRoomsByDate;
 
 // Current date finder
 const date = new Date();
@@ -20,8 +20,10 @@ today = `${year}/${month}/${day}`;
 // Query Selectors
 const customerDashboard = document.getElementById('section--customer-dashboard')
 const newBookingSection = document.getElementById('section--new-booking')
+const newBookingContainer = document.getElementById('container--make-new-booking')
 const upcomingStaysTable = document.getElementById('table--upcoming-stays-body')
 const previousStaysTable = document.getElementById('table--previous-stays-body')
+const availableRoomsTable = document.getElementById('table--available-rooms-body')
 const customerWelcome = document.getElementById('text--customer-message')
 const upcomingTotal = document.getElementById('text--upcoming-total')
 const previousTotal = document.getElementById('text--previous-total')
@@ -90,7 +92,8 @@ const onLoadPromises = () => {
       // console.log('Updated bookable rooms array with dates booked: ', bookableRooms)
 
       loadCustomer()
-      // hide(newBookingSection)    
+      // hide(newBookingSection)   
+      hide(availableRoomsTable) 
     })
 }
 
@@ -111,32 +114,39 @@ const getFilteredRoomsByDate = (event) => {
   let date = event.target.value
   let [year, month, day] = date.split('-');
   let selectedDate = [year, month, day].join('/');
-  console.log('Reformatted date: ', selectedDate)
-  console.log('Old selected date: ', event.target.value)
-  //  Need to convert 2022-11-27 into 2022/11/27
-  // selectedDate = '2022/02/13'
-  let filteredRoomsByDate = bookableRooms.filter(room => !room.datesBooked.includes(selectedDate))
-  console.log('Filtered Bookable Rooms: ', filteredRoomsByDate)
+  filteredRoomsByDate = bookableRooms.filter(room => !room.datesBooked.includes(selectedDate))
+  console.log(filteredRoomsByDate)
   return filteredRoomsByDate
 }
 
-// console.log('Bookable rooms:', bookableRooms)
-// console.log('Room 1 object: ', bookableRooms[0])
-// console.log('Room 1 datesBooked: ', bookableRooms[0].datesBooked)
-// console.log('Should return true: ', bookableRooms[0].datesBooked.includes('2022/02/13'))
-// console.log('Should also return true: ', bookableRooms[0].datesBooked.includes(selectedDate))
+const showAvailableRooms = (event) => {
+  getFilteredRoomsByDate(event)
+  show(availableRoomsTable)
+  filteredRoomsByDate.forEach(room => {
+    availableRoomsTable.innerHTML += `
+        <tr>
+          <td>${room.number}</td>
+          <td>${room.roomType}</td>
+          <td>${room.bidet}</td>
+          <td>${room.BedSize}</td>
+          <td>${room.numBeds}</td>
+          <td>$${room.costPerNight}</td>
+          <td><button>Select</button></td>
+        </tr>
+  `
+  })
+}
+
 // Delete this:
 hide(customerDashboard)
-
-
 
 // Event Listeners
 window.addEventListener('load', onLoadPromises)
 bookRoomButton.addEventListener('click', displayNewBookingSection)
-selectRoomButton.addEventListener('click', consoleCheck)
-bookItButton.addEventListener('click', consoleCheck)
+// selectRoomButton.addEventListener('click', consoleCheck)
+// bookItButton.addEventListener('click', consoleCheck)
 dateSelector.addEventListener('input', (event) => {
-  getFilteredRoomsByDate(event)
+  showAvailableRooms(event)
 });
 
 
