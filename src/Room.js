@@ -10,7 +10,6 @@ class Room {
   }
 
   getDatesBooked(allBookingsData) {
-    // bookableRooms.forEach(room => {
     allBookingsData.forEach(booking => {
       if (booking.roomNumber === this.number) {
         this.datesBooked.push(booking.date)
@@ -20,7 +19,3 @@ class Room {
 }
 
 export default Room;
-
-    // DatesBoked with be an array of dates
-    // If the date requested is included in that array,
-    // The room will not be displayed/available for booking

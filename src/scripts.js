@@ -1,9 +1,8 @@
 //Imports
 import './css/styles.css';
 import './images/turing-logo.png';
-import { getAllCustomers, getSingleCustomer, getAllBookings, getAllRooms, addNewBooking } from './api-calls';
+import { getSingleCustomer, getAllBookings, getAllRooms, addNewBooking } from './api-calls';
 import Customer from './Customer';
-import Booking from './Booking';
 import Room from './Room';
 
 
