@@ -137,6 +137,13 @@ const showAvailableRooms = (event) => {
   })
 }
 
+const getFilteredRoomsByType = (event) => {
+  // let roomType = event.target.value
+  let roomType = 'suite'
+  let filteredRoomsByType = filteredRoomsByDate.filter(room => roomType === room.roomType)
+  return filteredRoomsByType
+}
+
 // Delete this:
 hide(customerDashboard)
 
