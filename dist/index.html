@@ -14,24 +14,34 @@
     <h1>Overlook Hotel</h1>
   </header>
   <main>
-    
-    
+
+
     <!-- Start customer upcoming bookings and previous bookings section -->
     <section id="section--customer-dashboard" class="section--customer-dashboard">
       <button id="button--book-room" class="button--book-room">Book a Room</button>
       <h2>Upcoming Stays</h2>
       <table class="table--upcoming-stays">
         <thead id="table--upcoming-stays-body">
-          <tr><th>Date</th><th>Room Number</th><th>Confirmation</th><th>Price</th></tr>
+          <tr>
+            <th>Date</th>
+            <th>Room Number</th>
+            <th>Confirmation</th>
+            <th>Price</th>
+          </tr>
         </thead>
 
       </table>
-      <h5 id="text--upcoming-total" class="text--upcoming-total">Total:  </h5>
+      <h5 id="text--upcoming-total" class="text--upcoming-total">Total: </h5>
 
       <h3>Previous Stays</h3>
       <table class="table--previous-stays">
         <thead id="table--previous-stays-body">
-          <tr><th>Date</th><th>Room Number</th><th>Confirmation</th><th>Price</th></tr>
+          <tr>
+            <th>Date</th>
+            <th>Room Number</th>
+            <th>Confirmation</th>
+            <th>Price</th>
+          </tr>
         </thead>
       </table>
       <h5 id="text--previous-total" class="text--previous-total">Total: </h5>
@@ -49,10 +59,28 @@
           <input id="input--date-selection" placeholder="select a date" type="date" required>
         </container>
         <table class="table--available-rooms">
-          <thead id="table--available-rooms-body"> 
-            <tr><th>Room</th><th>Type</th><th>Has Bidet</th><th>Bed Size</th><th>Bed Count</th><th>Price</th><th>Book it</th></tr>
+          <thead id="table--available-rooms-body">
+            <tr>
+              <th>Room</th>
+              <th>
+                <div class="dropdown">
+                  <button class="dropbtn">Room Type</button>
+                  <div class="dropdown-content">
+                    <a href="#">Single Room</a>
+                    <a href="#">Junior Suite</a>
+                    <a href="#">Suite</a>
+                    <a href="#">Residential Suite</a>
+                  </div>
+                </div>
+              </th>
+              <th>Has Bidet</th>
+              <th>Bed Size</th>
+              <th>Bed Count</th>
+              <th>Price</th>
+              <th>Book it</th>
+            </tr>
           </thead>
-        
+
       </container>
     </section>
     <!-- End of book a new room section -->
