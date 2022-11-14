@@ -36,7 +36,7 @@ const bookRoomButton = document.getElementById('button--book-room')
 const filterRoomTypeForm = document.getElementById('form--room-filter')
 
 
-// Customer inputs
+// Customer input
 userID = 48
 
 
