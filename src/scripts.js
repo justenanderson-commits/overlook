@@ -7,8 +7,10 @@ import Customer from './Customer';
 import Booking from './Booking';
 import Room from './Room';
 
+
 //Global Variables
 let allCustomersData, singleCustomerData, allBookingsData, allRoomsData, customer, newBookings, today, bookableRooms, userID, selectedDate, bookedRooms, filteredRoomsByDate, filteredRoomsByType;
+
 
 // Current date finder
 const date = new Date();
@@ -17,13 +19,16 @@ let month = date.getMonth() + 1;
 let year = date.getFullYear();
 today = `${year}/${month}/${day}`;
 
+
 // Query Selectors
 const customerDashboard = document.getElementById('section--customer-dashboard')
 const newBookingSection = document.getElementById('section--new-booking')
+const noRoomsAvailableSection = document.getElementById('section--no-rooms-available')
 const newBookingContainer = document.getElementById('container--make-new-booking')
 const upcomingStaysTable = document.getElementById('table--upcoming-stays-body')
 const previousStaysTable = document.getElementById('table--previous-stays-body')
-const availableRoomsTable = document.getElementById('table--available-rooms-body')
+const availableRoomsTableHead = document.getElementById('table--available-rooms-head')
+const availableRoomsTableBody = document.getElementById('table--available-rooms-body')
 const customerWelcome = document.getElementById('text--customer-message')
 const upcomingTotal = document.getElementById('text--upcoming-total')
 const previousTotal = document.getElementById('text--previous-total')
@@ -41,6 +46,7 @@ const residentialSuiteButton = document.getElementById('button--residential-suit
 const bookRoomButton = document.getElementById('button--book-room')
 const filterRoomTypeForm = document.getElementById('form--room-filter')
 
+
 // Customer inputs
 userID = 48
 
@@ -51,17 +57,10 @@ const onLoadPromises = () => {
     .then(data => {
       // singleCustomerData is harded-coded
       singleCustomerData = data[0]
-      // console.log('Customer Data: ', singleCustomerData)
-
       allBookingsData = data[1].bookings
-      // console.log('All bookings data: ', allBookingsData)
       allRoomsData = data[2].rooms
-
       let customerBookings = allBookingsData.filter(booking => booking.userID === userID)
-      // console.log('Customer Bookings: ', customerBookings)
-
       customer = new Customer(singleCustomerData)
-      // console.log('New Customer Object: ', customer)
       customer.getNewBookings(customerBookings, today)
       customer.getOldBookings(customerBookings, today)
       customer.getCostOfEachNewBooking(allRoomsData)
@@ -76,7 +75,6 @@ const onLoadPromises = () => {
         <td>${booking.price}</td>
         </tr>`
       })
-
       customer.oldBookings.forEach(booking => {
         previousStaysTable.innerHTML += `<tr>
         <td>${booking.date}</td>
@@ -85,58 +83,63 @@ const onLoadPromises = () => {
         <td>${booking.price}</td>
         </tr>`
       })
-
       upcomingTotal.innerText += ` $${customer.totalUpcomingCost}`
       previousTotal.innerText += ` $${customer.totalPreviousCost}`
-      // console.log('Customer newBookings property: ', customer.newBookings)
-      // console.log('Customer oldBookings property: ', customer.oldBookings)
-
       bookableRooms = [];
-      // console.log('All rooms data: ', allRoomsData)
       allRoomsData.forEach(room => {
         room = new Room(room)
         room.getDatesBooked(allBookingsData)
         bookableRooms.push(room)
       })
-      // console.log('Updated bookable rooms array with dates booked: ', bookableRooms)
-
       loadCustomer()
-      hide(newBookingSection)   
-      hide(availableRoomsTable) 
+      hide(newBookingSection)
+      hide(availableRoomsTableBody)
     })
 }
 
-// Delete this stuff:
-const consoleCheck = () => console.log('This worked')
 
 // Helper Functions
 const show = element => element.classList.remove('hidden')
 const hide = element => element.classList.add('hidden')
+
+
+// Other functions
 const loadCustomer = () => customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
 const displayNewBookingSection = () => {
   hide(customerDashboard)
   hide(filterRoomTypeForm)
-  hide(availableRoomsTable)
+  hide(availableRoomsTableBody)
+  hide(availableRoomsTableHead)
+  hide(noRoomsAvailableSection)
   show(newBookingSection)
 }
 
-// Other functions
 const getFilteredRoomsByDate = (event) => {
   let date = event.target.value
-  console.log('Filter by date event: ', event.target.value)
   let [year, month, day] = date.split('-');
   let selectedDate = [year, month, day].join('/');
   filteredRoomsByDate = bookableRooms.filter(room => !room.datesBooked.includes(selectedDate))
-  console.log(filteredRoomsByDate)
-  return filteredRoomsByDate
+  if (filteredRoomsByDate.length != 0) {
+    return filteredRoomsByDate
+  } else {
+    show(noRoomsAvailableSection)
+  }
 }
 
 const showAvailableRooms = (event) => {
   getFilteredRoomsByDate(event)
-  show(availableRoomsTable)
-  show(filterRoomTypeForm)
-  filteredRoomsByDate.forEach(room => {
-    availableRoomsTable.innerHTML += `
+  if (filteredRoomsByDate.length === 0) {
+    hide(availableRoomsTableHead)
+
+    // Hide more stuff here
+
+    show(noRoomsAvailableSection)
+  } else {
+    show(availableRoomsTableHead)
+    show(availableRoomsTableBody)
+    show(filterRoomTypeForm)
+    filteredRoomsByDate.forEach(room => {
+      availableRoomsTableBody.innerHTML += `
         <tr>
           <td>${room.number}</td>
           <td>${room.roomType}</td>
@@ -146,26 +149,30 @@ const showAvailableRooms = (event) => {
           <td>$${room.costPerNight}</td>
           <td><button id="button--select-room">Select</button></td>
         </tr>
-  `
-  })
+        `
+    })
+  }
 }
 
 const getFilteredRoomsByType = (event) => {
-  // console.log(event.target.value)
   let roomType = event.target.value
-  // console.log('Room type: ,', roomType)
-  // let roomType = 'suite'
   filteredRoomsByType = filteredRoomsByDate.filter(room => roomType === room.roomType)
-  // console.log('Filtered rooms by type: ', filteredRoomsByType)
-  return filteredRoomsByType
+  if (filteredRoomsByType.length === 0) {
+    hide(newBookingContainer)
+    hide(availableRoomsTableHead)
+    show(noRoomsAvailableSection)
+  } else {
+    return filteredRoomsByType
+  }
 }
 
 const showFilteredRoomsByType = (event) => {
   getFilteredRoomsByType(event)
   if (event.target.value != 'any') {
-    availableRoomsTable.innerHTML = ''
+    availableRoomsTableBody.innerHTML = ''
+    show(availableRoomsTableBody)
     filteredRoomsByType.forEach(room => {
-      availableRoomsTable.innerHTML += `
+      availableRoomsTableBody.innerHTML += `
         <tr>
           <td>${room.number}</td>
           <td>${room.roomType}</td>
@@ -174,44 +181,25 @@ const showFilteredRoomsByType = (event) => {
           <td>${room.numBeds}</td>
           <td>$${room.costPerNight}</td>
           <td><button id="button--select-room">Select</button></td>
-        </tr>
-  `
+        </tr>`
     })
   } else {
-    availableRoomsTable.innerHTML = ''
+    availableRoomsTableBody.innerHTML = ''
     showAvailableRooms(event)
   }
 }
 
-
-
 // Event Listeners
 window.addEventListener('load', onLoadPromises)
 bookRoomButton.addEventListener('click', displayNewBookingSection)
-// selectRoomButton.addEventListener('click', consoleCheck)
-// bookItButton.addEventListener('click', consoleCheck)
 dateSelector.addEventListener('input', (event) => {
   showAvailableRooms(event)
 });
-
-function consoleCheck2() {
-  console.log('This button works')
-}
-
-
 roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
-
-
-
 
 
 // Delete this:
 // hide(customerDashboard)
-
-// Need to figure out why these aren't being imported....?
-const displayBookingConfirmation = () => (console.log('This is a confirmation message.'))
-const displayFierceApology = () => console.log('This is a fierce apology.')
-
 
 // Maybe delete this:
 export default today;
