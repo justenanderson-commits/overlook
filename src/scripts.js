@@ -51,15 +51,8 @@ const onLoadPromises = () => {
       allBookingsData = data[1].bookings
       allRoomsData = data[2].rooms
 
-      // Refactor this ugliness
       customerBookings = allBookingsData.filter(booking => booking.userID == userID)
-      customer = new Customer(singleCustomerData)
-      customer.getNewBookings(customerBookings, today)
-      customer.getOldBookings(customerBookings, today)
-      customer.getCostOfEachNewBooking(allRoomsData)
-      customer.getCostOfEachOldBooking(allRoomsData)
-      customer.getTotalAmountToSpend()
-      customer.getTotalAmountSpent()
+      loadCustomerData(singleCustomerData, customerBookings, today, allRoomsData)
       upcomingStaysTableBody.innerHTML = ''
       customer.newBookings.forEach(booking => {
         upcomingStaysTableBody.innerHTML += `<tr>
@@ -80,9 +73,7 @@ const onLoadPromises = () => {
       })
       upcomingTotal.innerText = `Total $${customer.totalUpcomingCost}`
       previousTotal.innerText = `Total $${customer.totalPreviousCost}`
-
-      // ----------------------------------------------
-
+      
       bookableRooms = [];
       allRoomsData.forEach(room => {
         room = new Room(room)
@@ -92,13 +83,7 @@ const onLoadPromises = () => {
       loadCustomerDashboard()
       displayAvailableRoomsTable(hide)
       displayLoginElements(hide)
-      // hide(loginContainer)
-      // hide(loginPageSection)
-      // hide(loginError)
       hide(newBookingSection)
-      // hide(availableRoomsTableBody)
-      // show(customerDashboard)
-      // show(headerSection)
       dateSelector.min = `${year}-${month}-${day}`
     })
 }
@@ -119,21 +104,16 @@ const loadCustomerDashboard = () => {
 const displayNewBookingSection = () => {
   displayAvailableRoomsTable(hide)
   displayLoginElements(hide)
-  // hide(loginContainer)
-  // hide(loginPageSection)
-  // hide(loginError)
   hide(customerDashboard)
   hide(filterRoomTypeForm)
-  // hide(availableRoomsTableBody)
-  // hide(availableRoomsTableHead)
   hide(noRoomsMessage)
   show(newBookingSection)
 }
 
 const getFilteredRoomsByDate = (event) => {
   let date = event.target.value
-  let [year, month, day] = date.split('-');
-  selectedDate = [year, month, day].join('/');
+  let [year, month, day] = date.split('-')
+  selectedDate = [year, month, day].join('/')
   filteredRoomsByDate = bookableRooms.filter(room => !room.datesBooked.includes(selectedDate))
   if (filteredRoomsByDate.length != 0) {
     return filteredRoomsByDate
@@ -146,28 +126,14 @@ const showAvailableRooms = (event) => {
   getFilteredRoomsByDate(event)
   if (filteredRoomsByDate.length === 0) {
     displayAvailableRoomsTable(hide)
-    // hide(availableRoomsTableHead)
-    // hide(availableRoomsTableBody)
     show(noRoomsMessage)
+
   } else {
     displayAvailableRoomsTable(show)
-    // show(availableRoomsTableHead)
-    // show(availableRoomsTableBody)
     show(filterRoomTypeForm)
     availableRoomsTableBody.innerHTML = ''
     filteredRoomsByDate.forEach(room => {
       updateRoomsTable(room)
-      // availableRoomsTableBody.innerHTML += `
-      //   <tr>
-      //     <td>${room.number}</td>
-      //     <td>${room.roomType}</td>
-      //     <td>${room.bidet}</td>
-      //     <td>${room.BedSize}</td>
-      //     <td>${room.numBeds}</td>
-      //     <td>$${room.costPerNight}</td>
-      //     <td><button id="button--select-room" data-room="${room.number}">Select</button></td>
-      //   </tr>
-      //   `
     })
   }
 }
@@ -182,28 +148,13 @@ const showFilteredRoomsByType = (event) => {
   getFilteredRoomsByType(event)
   if (filteredRoomsByType.length === 0) {
     displayFierceApology()
-    // hide(availableRoomsTableHead)
-    // hide(availableRoomsTableBody)
-    // show(noRoomsMessage)
+
   } else if (event.target.value != 'any') {
     hide(noRoomsMessage)
     displayAvailableRoomsTable(show)
-    // show(availableRoomsTableHead)
-    // show(availableRoomsTableBody)
     availableRoomsTableBody.innerHTML = ''
     filteredRoomsByType.forEach(room => {
       updateRoomsTable(room)
-      // availableRoomsTableBody.innerHTML += `
-      //   <tr>
-      //     <td>${room.number}</td>
-      //     <td>${room.roomType}</td>
-      //     <td>${room.bidet}</td>
-      //     <td>${room.BedSize}</td>
-      //     <td>${room.numBeds}</td>
-      //     <td>$${room.costPerNight}</td>
-      //     <td><button id="button--select-room" data-room="${room.number}">Select</button></td>
-      //   </tr>
-      //   `
     })
   } else {
     availableRoomsTableBody.innerHTML = ''
@@ -218,7 +169,7 @@ const createNewBooking = (event) => {
     'roomNumber': +event.target.dataset.room
   }
   Promise.all([addNewBooking(newBooking)])
-    .then(data => onLoadPromises())
+    .then(data => onLoadPromises(data))
 }
 
 const customerLogin = () => {
@@ -241,8 +192,6 @@ const displayLoginSection = () => {
   hide(loginError)
   hide(customerDashboard)
   hide(filterRoomTypeForm)
-  // hide(availableRoomsTableBody)
-  // hide(availableRoomsTableHead)
   hide(noRoomsMessage)
   hide(newBookingSection)
   hide(networkErrorSection)
@@ -265,17 +214,6 @@ const displayLoginElements = (toggle) => {
   toggle(loginError)
 }
 
-// const hideLoginElements = () => {
-//   hide(loginPageSection)
-//   hide(loginContainer)
-//   hide(loginError)
-// }
-
-// const showLoginElements = () => {
-//   show(loginPageSection)
-//   show(loginContainer)
-// }
-
 const updateRoomsTable = (room) => {
   availableRoomsTableBody.innerHTML += `
         <tr>
@@ -292,15 +230,23 @@ const updateRoomsTable = (room) => {
 
 const displayFierceApology = () => {
   displayAvailableRoomsTable(hide)
-  // hide(availableRoomsTableHead)
-  // hide(availableRoomsTableBody)
   show(noRoomsMessage)
 }
 
 const displayAvailableRoomsTable = (toggle) => {
   toggle(availableRoomsTableHead)
   toggle(availableRoomsTableBody)
-} 
+}
+
+const loadCustomerData = () => {
+  customer = new Customer(singleCustomerData)
+  customer.getNewBookings(customerBookings, today)
+  customer.getOldBookings(customerBookings, today)
+  customer.getCostOfEachNewBooking(allRoomsData)
+  customer.getCostOfEachOldBooking(allRoomsData)
+  customer.getTotalAmountToSpend()
+  customer.getTotalAmountSpent()
+}
 
 // Event Listeners
 window.addEventListener('load', displayLoginSection)
