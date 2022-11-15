@@ -59,13 +59,10 @@ const onLoadPromises = () => {
       // singleCustomerData is harded-coded
       singleCustomerData = data[0]
       allBookingsData = data[1].bookings
-      console.log(allBookingsData)
       allRoomsData = data[2].rooms
       customerBookings = allBookingsData.filter(booking => booking.userID == userID)
-      console.log('Customer bookings : ', customerBookings)
       customer = new Customer(singleCustomerData)
       customer.getNewBookings(customerBookings, today)
-      console.log('Customer newbookings ', customer.newBookings)
       customer.getOldBookings(customerBookings, today)
       customer.getCostOfEachNewBooking(allRoomsData)
       customer.getCostOfEachOldBooking(allRoomsData)
@@ -97,7 +94,6 @@ const onLoadPromises = () => {
         room.getDatesBooked(allBookingsData)
         bookableRooms.push(room)
       })
-      console.log('Bookable rooms: ', bookableRooms)
       loadCustomer()
       hide(loginPageSection)
       hide(newBookingSection)
@@ -213,30 +209,21 @@ const createNewBooking = (event) => {
     'roomNumber': +event.target.dataset.room
   }
   Promise.all([addNewBooking(newBooking)])
-    .then(data => onLoadPromises())
-  
-  // show(customerDashboard)
+    .then(data => onLoadPromises()) 
 }
 
 const customerLogin = () => {
   let username = usernameInput.value
   let nameOnly = username.slice(0, 8)
-  console.log('Name Only: ', nameOnly)
   userID = username.slice(8)
-  console.log('UserID: ', userID)
-  
-
   if (nameOnly === 'customer' && userID < 51 && userID > 0 && passwordInput.value === 'overlook2021') {
     onLoadPromises()
     hide(loginPageSection)
     show(customerDashboard)
-    // show(headerSection)
-    console.log('Login success')
   } else {
     show(loginError)
   }
 }
-
 
 const displayLoginSection = () => {
 show(loginPageSection)
@@ -250,9 +237,6 @@ hide(availableRoomsTableHead)
 hide(noRoomsMessage)
 hide(newBookingSection)
 }
-
-// Delete this 
-const consoleCheck = () => console.log('This works')
 
 // Event Listeners
 window.addEventListener('load', displayLoginSection)
