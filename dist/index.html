@@ -1,17 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Overlook Hotel</title>
 </head>
+
 <body>
-  <header>
+  <header id="section--header">
     <p id="text--customer-message" class="text--customer-message">Welcome, customer!</p>
     <h1>Overlook Hotel</h1>
   </header>
   <main>
+    <section id="section--login-page">
+      <h3>Welcome to the Overlook. Please sign in.</h3>
+      <container id="container--log-in" class="container--log-in">
+        <label>Enter username</label>
+        <input id="input--username" placeholder="username">
+        <br>
+        <label>Enter password</label>
+        <input id="input--password" placeholder="password">
+        <br>
+        <button id="button--login">Log In</button>
+        <p id="error--login-page" class="error--login-page">Username and password do not match. Please try again.</p>
+      </container>
+    </section>
+
     <section id="section--customer-dashboard" class="section--customer-dashboard">
       <button id="button--book-room" class="button--book-room">Book a Room</button>
       <h2>Upcoming Stays</h2>
@@ -24,13 +40,15 @@
             <th>Price</th>
           </tr>
         </thead>
+        <tbody id="table--upcoming-stays-body">
+        </tbody>
 
       </table>
       <h5 id="text--upcoming-total" class="text--upcoming-total">Total: </h5>
 
       <h3>Previous Stays</h3>
       <table class="table--previous-stays">
-        <thead id="table--previous-stays-body">
+        <thead id="table--previous-stays-head">
           <tr>
             <th>Date</th>
             <th>Room Number</th>
@@ -38,6 +56,8 @@
             <th>Price</th>
           </tr>
         </thead>
+        <tbody id="table--previous-stays-body">
+        </tbody>
       </table>
       <h5 id="text--previous-total" class="text--previous-total">Total: </h5>
     </section>
@@ -75,7 +95,19 @@
           </tbody>
       </container>
     </section>
+
+    <!-- Login section -->
+    <section id="section--login-page">
+      <container id="container--log-in">
+        <label>Enter username</label>
+        <input placeholder="username">
+        <label>Enter password</label>
+        <input placeholder="password">
+      </container>
+    </section>
+
   </main>
   <script src="bundle.js"></script>
 </body>
+
 </html>

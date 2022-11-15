@@ -15,7 +15,7 @@ class Customer {
   }
 
   getOldBookings(customerBookings, today) {
-    let oldBookings = customerBookings.filter(booking => booking.date <= '2022/11/11')
+    let oldBookings = customerBookings.filter(booking => booking.date <= today)
     this.oldBookings = oldBookings
     return oldBookings
   }
