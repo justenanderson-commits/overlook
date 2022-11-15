@@ -1,6 +1,5 @@
 //Imports
 import './css/styles.css';
-import './images/turing-logo.png';
 import { getSingleCustomer, getAllBookings, getAllRooms, addNewBooking } from './api-calls';
 import Customer from './Customer';
 import Room from './Room';
@@ -104,8 +103,6 @@ const hide = element => element.classList.add('hidden')
 
 
 // Other functions
-
-
 const loadCustomer = () => customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
 
 const displayNewBookingSection = () => {
@@ -187,7 +184,6 @@ const showFilteredRoomsByType = (event) => {
           <td>$${room.costPerNight}</td>
           <td><button id="button--select-room" data-room="${room.number}">Select</button></td>`
     })
-
   } else {
     availableRoomsTableBody.innerHTML = ''
     showAvailableRooms(event)
@@ -219,7 +215,6 @@ const customerLogin = () => {
   }
 }
 
-
 const displayLoginSection = () => {
   show(loginPageSection)
   show(loginContainer)
@@ -249,14 +244,11 @@ const displayNetworkError = () => {
 }
 
 
-
 // Event Listeners
 window.addEventListener('load', displayLoginSection)
 // window.addEventListener('load', displayNetworkError)
 bookRoomButton.addEventListener('click', displayNewBookingSection)
-dateSelector.addEventListener('input', (event) => {
-  showAvailableRooms(event)
-});
+dateSelector.addEventListener('input', (event) => showAvailableRooms(event))
 roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
 availableRoomsTableBody.addEventListener('click', createNewBooking)
 loginButton.addEventListener('click', customerLogin)

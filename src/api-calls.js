@@ -12,7 +12,6 @@ const getSingleCustomer = (customerId) => {
       return data;
     })
     .catch(error => {
-      // Add callback function here
       displayNetworkError()
       console.log('Error message: ', error)
     });
@@ -30,7 +29,6 @@ const getAllBookings = () => {
       return data;
     })
     .catch(error => {
-      // Add callback function here
       displayNetworkError()
       console.log('Error message: ', error)
     });
@@ -48,7 +46,6 @@ const getAllRooms = () => {
       return data;
     })
     .catch(error => {
-      // Add callback function here
       displayNetworkError()
       console.log('Error message: ', error)
     });
@@ -75,6 +72,5 @@ const addNewBooking = (newBooking) => {
       console.log('Error message: ', error)
     });
 }
-
 
 export { getSingleCustomer, getAllBookings, getAllRooms, addNewBooking }
