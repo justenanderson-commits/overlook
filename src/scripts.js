@@ -23,11 +23,11 @@ const customerDashboard = document.getElementById('section--customer-dashboard')
 const newBookingSection = document.getElementById('section--new-booking')
 const noRoomsAvailableSection = document.getElementById('section--no-rooms-available')
 const loginPageSection = document.getElementById('section--login-page')
-const upcomingStaysTable = document.getElementById('table--upcoming-stays-body')
 
-
+const upcomingStaysTableBody = document.getElementById('table--upcoming-stays-body')
 const upcomingStaysTableHead = document.getElementById('table--upcoming-stays-head')
-const previousStaysTable = document.getElementById('table--previous-stays-body')
+
+const previousStaysTableBody = document.getElementById('table--previous-stays-body')
 const previousStaysTableHead = document.getElementById('table--previous-stays-head')
 
 
@@ -48,15 +48,11 @@ const loginButton = document.getElementById('button--login')
 const loginError = document.getElementById('error--login-page')
 const loginContainer = document.getElementById('container--log-in')
 
-// Customer input
-userID = 48
 
-
-// Promises - REMOVE HARD CODING WHEN THESE ARE WORKING:
+// Promises
 const onLoadPromises = () => {
   Promise.all([getSingleCustomer(userID), getAllBookings(), getAllRooms()])
     .then(data => {
-      // singleCustomerData is harded-coded
       singleCustomerData = data[0]
       allBookingsData = data[1].bookings
       allRoomsData = data[2].rooms
@@ -68,18 +64,18 @@ const onLoadPromises = () => {
       customer.getCostOfEachOldBooking(allRoomsData)
       customer.getTotalAmountToSpend()
       customer.getTotalAmountSpent()
-      upcomingStaysTable.innerHTML = ''
+      upcomingStaysTableBody.innerHTML = ''
       customer.newBookings.forEach(booking => {
-        upcomingStaysTable.innerHTML += `<tr>
+        upcomingStaysTableBody.innerHTML += `<tr>
         <td>${booking.date}</td>
         <td>${booking.roomNumber}</td>
         <td>${booking.id}</td>
         <td>${booking.price}</td>
         </tr>`
       })
-      previousStaysTable.innerHTML = ''
+      previousStaysTableBody.innerHTML = ''
       customer.oldBookings.forEach(booking => {
-        previousStaysTable.innerHTML += `<tr>
+        previousStaysTableBody.innerHTML += `<tr>
         <td>${booking.date}</td>
         <td>${booking.roomNumber}</td>
         <td>${booking.id}</td>
