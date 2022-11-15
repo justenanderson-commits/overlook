@@ -597,6 +597,15 @@ let bookingsWithPreviousCost = [
         "roomNumber": 22,
         "price": 350.31
     }
-]
+];
 
-export { customer48, cust48UpcomingBookings, cust48PreviousBookings, cust48AllBookings, allRoomsData, bookingsWithUpcomingCost, bookingsWithPreviousCost };
+let customer60 = {
+    "id": 60,
+    "name": "John Customer"
+  };
+
+let cust60AllBookings = [];
+let cust60UpcomingBookings = [];
+let cust60PreviousBookings = [];
+
+export { customer48, cust48UpcomingBookings, cust48PreviousBookings, cust48AllBookings, allRoomsData, bookingsWithUpcomingCost, bookingsWithPreviousCost, customer60, cust60AllBookings };
