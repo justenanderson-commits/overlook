@@ -50,6 +50,8 @@ const onLoadPromises = () => {
       singleCustomerData = data[0]
       allBookingsData = data[1].bookings
       allRoomsData = data[2].rooms
+
+      // Refactor this ugliness
       customerBookings = allBookingsData.filter(booking => booking.userID == userID)
       customer = new Customer(singleCustomerData)
       customer.getNewBookings(customerBookings, today)
@@ -63,7 +65,7 @@ const onLoadPromises = () => {
         upcomingStaysTableBody.innerHTML += `<tr>
         <td>${booking.date}</td>
         <td>${booking.roomNumber}</td>
-        <td>${booking.id}   </td>
+        <td>${booking.id}</td>
         <td>$${booking.price}</td>
         </tr>`
       })
@@ -78,20 +80,25 @@ const onLoadPromises = () => {
       })
       upcomingTotal.innerText = `Total $${customer.totalUpcomingCost}`
       previousTotal.innerText = `Total $${customer.totalPreviousCost}`
+
+      // ----------------------------------------------
+
       bookableRooms = [];
       allRoomsData.forEach(room => {
         room = new Room(room)
         room.getDatesBooked(allBookingsData)
         bookableRooms.push(room)
       })
-      loadCustomer()
-      hide(loginContainer)
-      hide(loginPageSection)
-      hide(loginError)
+      loadCustomerDashboard()
+      displayAvailableRoomsTable(hide)
+      displayLoginElements(hide)
+      // hide(loginContainer)
+      // hide(loginPageSection)
+      // hide(loginError)
       hide(newBookingSection)
-      hide(availableRoomsTableBody)
-      show(customerDashboard)
-      show(headerSection)
+      // hide(availableRoomsTableBody)
+      // show(customerDashboard)
+      // show(headerSection)
       dateSelector.min = `${year}-${month}-${day}`
     })
 }
@@ -103,16 +110,22 @@ const hide = element => element.classList.add('hidden')
 
 
 // Other functions
-const loadCustomer = () => customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
+const loadCustomerDashboard = () => {
+  customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
+  show(customerDashboard)
+  show(headerSection)
+}
 
 const displayNewBookingSection = () => {
-  hide(loginContainer)
-  hide(loginPageSection)
-  hide(loginError)
+  displayAvailableRoomsTable(hide)
+  displayLoginElements(hide)
+  // hide(loginContainer)
+  // hide(loginPageSection)
+  // hide(loginError)
   hide(customerDashboard)
   hide(filterRoomTypeForm)
-  hide(availableRoomsTableBody)
-  hide(availableRoomsTableHead)
+  // hide(availableRoomsTableBody)
+  // hide(availableRoomsTableHead)
   hide(noRoomsMessage)
   show(newBookingSection)
 }
@@ -132,8 +145,9 @@ const getFilteredRoomsByDate = (event) => {
 const showAvailableRooms = (event) => {
   getFilteredRoomsByDate(event)
   if (filteredRoomsByDate.length === 0) {
-    hide(availableRoomsTableHead)
-    hide(availableRoomsTableBody)
+    displayAvailableRoomsTable(hide)
+    // hide(availableRoomsTableHead)
+    // hide(availableRoomsTableBody)
     show(noRoomsMessage)
   } else {
     displayAvailableRoomsTable(show)
@@ -173,8 +187,9 @@ const showFilteredRoomsByType = (event) => {
     // show(noRoomsMessage)
   } else if (event.target.value != 'any') {
     hide(noRoomsMessage)
-    show(availableRoomsTableHead)
-    show(availableRoomsTableBody)
+    displayAvailableRoomsTable(show)
+    // show(availableRoomsTableHead)
+    // show(availableRoomsTableBody)
     availableRoomsTableBody.innerHTML = ''
     filteredRoomsByType.forEach(room => {
       updateRoomsTable(room)
@@ -220,40 +235,46 @@ const customerLogin = () => {
 }
 
 const displayLoginSection = () => {
-  showLoginElements()
+  displayLoginElements(show)
+  displayAvailableRoomsTable(hide)
   hide(headerSection)
   hide(loginError)
   hide(customerDashboard)
   hide(filterRoomTypeForm)
-  hide(availableRoomsTableBody)
-  hide(availableRoomsTableHead)
+  // hide(availableRoomsTableBody)
+  // hide(availableRoomsTableHead)
   hide(noRoomsMessage)
   hide(newBookingSection)
   hide(networkErrorSection)
 }
 
 const displayNetworkError = () => {
-  hideLoginElements()
+  displayLoginElements(hide)
+  displayAvailableRoomsTable(hide)
   hide(headerSection)
   hide(customerDashboard)
   hide(filterRoomTypeForm)
-  hide(availableRoomsTableBody)
-  hide(availableRoomsTableHead)
   hide(noRoomsMessage)
   hide(newBookingSection)
   show(networkErrorSection)
 }
 
-const hideLoginElements = () => {
-  hide(loginPageSection)
-  hide(loginContainer)
-  hide(loginError)
+const displayLoginElements = (toggle) => {
+  toggle(loginPageSection)
+  toggle(loginContainer)
+  toggle(loginError)
 }
 
-const showLoginElements = () => {
-  show(loginPageSection)
-  show(loginContainer)
-}
+// const hideLoginElements = () => {
+//   hide(loginPageSection)
+//   hide(loginContainer)
+//   hide(loginError)
+// }
+
+// const showLoginElements = () => {
+//   show(loginPageSection)
+//   show(loginContainer)
+// }
 
 const updateRoomsTable = (room) => {
   availableRoomsTableBody.innerHTML += `
@@ -270,8 +291,9 @@ const updateRoomsTable = (room) => {
 }
 
 const displayFierceApology = () => {
-  hide(availableRoomsTableHead)
-  hide(availableRoomsTableBody)
+  displayAvailableRoomsTable(hide)
+  // hide(availableRoomsTableHead)
+  // hide(availableRoomsTableBody)
   show(noRoomsMessage)
 }
 
