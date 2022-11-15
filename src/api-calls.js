@@ -1,5 +1,6 @@
 import displayNetworkError from './scripts'
 
+
 const getSingleCustomer = (customerId) => {
   return fetch(`http://localhost:3001/api/v1/customers/${customerId}`)
     .then(response => {
@@ -72,5 +73,6 @@ const addNewBooking = (newBooking) => {
       console.log('Error message: ', error)
     });
 }
+
 
 export { getSingleCustomer, getAllBookings, getAllRooms, addNewBooking }

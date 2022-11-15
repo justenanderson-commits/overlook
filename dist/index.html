@@ -1,28 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Overlook Hotel</title>
 </head>
-
 <body>
   <header id="section--header">
     <p id="text--customer-message" class="text--customer-message">Welcome, customer!</p>
     <h1>Overlook Hotel</h1>
   </header>
-
-
-
   <section id="section--network-error" class="section--network-error">
     <h1>We seem to be have trouble connecting to the Overlook. Please try again later.</h1>
   </section>
-
-
-
-
   <main>
     <section id="section--login-page">
       <h3>Welcome to the Overlook. Please sign in.</h3>
@@ -37,41 +28,38 @@
         <p id="error--login-page" class="error--login-page">Username and password do not match. Please try again.</p>
       </container>
     </section>
-
     <section id="section--customer-dashboard" class="section--customer-dashboard">
       <button id="button--book-room" class="button--book-room">Book a Room</button>
       <container class="container--customer-stays">
-      <h2>Upcoming Stays</h2>
-      <table class="table--upcoming-stays">
-        <thead id="table--upcoming-stays-head">
-          <tr>
-            <th>Date</th>
-            <th>Room Number</th>
-            <th>Confirmation Number</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody id="table--upcoming-stays-body">
-        </tbody>
-
-      </table>
-      <h5 id="text--upcoming-total" class="text--upcoming-total">Total: </h5>
-
-      <h3>Previous Stays</h3>
-      <table class="table--previous-stays">
-        <thead id="table--previous-stays-head">
-          <tr>
-            <th>Date</th>
-            <th>Room Number</th>
-            <th>Confirmation Number</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody id="table--previous-stays-body">
-        </tbody>
-      </table>
-      <h5 id="text--previous-total" class="text--previous-total">Total: </h5>
-    </container>
+        <h2>Upcoming Stays</h2>
+        <table class="table--upcoming-stays">
+          <thead id="table--upcoming-stays-head">
+            <tr>
+              <th>Date</th>
+              <th>Room Number</th>
+              <th>Confirmation Number</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody id="table--upcoming-stays-body">
+          </tbody>
+        </table>
+        <h5 id="text--upcoming-total" class="text--upcoming-total">Total: </h5>
+        <h3>Previous Stays</h3>
+        <table class="table--previous-stays">
+          <thead id="table--previous-stays-head">
+            <tr>
+              <th>Date</th>
+              <th>Room Number</th>
+              <th>Confirmation Number</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody id="table--previous-stays-body">
+          </tbody>
+        </table>
+        <h5 id="text--previous-total" class="text--previous-total">Total: </h5>
+      </container>
     </section>
     <section id="section--new-booking" class="section--new-booking">
       <h3>Book a Room</h3>
@@ -98,7 +86,7 @@
               <th>Has Bidet</th>
               <th>Bed Size</th>
               <th>Bed Count</th>
-              <th>Price   </th>
+              <th>Price </th>
               <th>Book it</th>
             </tr>
           </thead>
@@ -107,7 +95,6 @@
           </tbody>
       </container>
     </section>
-
   </main>
   <script src="bundle.js"></script>
 </body>

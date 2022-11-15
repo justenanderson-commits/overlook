@@ -253,4 +253,5 @@ roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
 availableRoomsTableBody.addEventListener('click', createNewBooking)
 loginButton.addEventListener('click', customerLogin)
 
+
 export default displayNetworkError
