@@ -12,22 +12,19 @@ button {
   color: #FFFFFF
 }
 
-th, td {
-  padding: 1%;
-}
-
-h1 {
-  display: flex;
-  justify-content: center;
-}
-
-h2, h3 {
+h1, h2, h3 {
   display: flex;
   justify-content: center;
 }
 
 header {
   background-color: rgb(244, 234, 218);
+}
+
+th, td {
+  padding-left: 5%;
+  margin: auto;
+  text-align: center;
 }
 
 .button--book-room {
@@ -45,10 +42,6 @@ header {
   align-items: center;
 }
 
-/* .section--customer-dashboard, .section--new-booking {
-background-color: rgb(231, 231, 231);
-} */
-
 .container--log-in {
   display: flex;
   flex-direction: column;
@@ -64,6 +57,12 @@ background-color: rgb(231, 231, 231);
   background-color: rgb(231, 231, 231);
 }
 
+.form--room-filter {
+  margin: 2%;
+  display: flex;
+  align-items: center;
+}
+
 .text--previous-total, .text--upcoming-total {
   display: flex;
   justify-content: center;
@@ -72,13 +71,6 @@ background-color: rgb(231, 231, 231);
 .text--customer-message {
   padding-left: 2%;
 }
-
-/* .table--upcoming-stays, .table--previous-stays {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-} */
 
 .hidden {
   display: none;
