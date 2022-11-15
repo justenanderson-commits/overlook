@@ -31,10 +31,6 @@ th, td {
   margin-left: 2%
 }
 
-.error--login-page {
-  color: red;
-}
-
 .container--date-picker, .dropdown {
   display: flex;
   justify-content: center;
@@ -57,10 +53,20 @@ th, td {
   background-color: rgb(231, 231, 231);
 }
 
+.error--login-page {
+  color: red;
+}
+
 .form--room-filter {
   margin: 2%;
   display: flex;
   align-items: center;
+}
+
+
+.section--network-error {
+  color: red;
+  margin-top: 20%;
 }
 
 .text--previous-total, .text--upcoming-total {

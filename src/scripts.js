@@ -23,14 +23,9 @@ const customerDashboard = document.getElementById('section--customer-dashboard')
 const newBookingSection = document.getElementById('section--new-booking')
 const noRoomsAvailableSection = document.getElementById('section--no-rooms-available')
 const loginPageSection = document.getElementById('section--login-page')
-
 const upcomingStaysTableBody = document.getElementById('table--upcoming-stays-body')
-const upcomingStaysTableHead = document.getElementById('table--upcoming-stays-head')
-
 const previousStaysTableBody = document.getElementById('table--previous-stays-body')
-const previousStaysTableHead = document.getElementById('table--previous-stays-head')
-
-
+const networkErrorSection = document.getElementById('section--network-error')
 const availableRoomsTableHead = document.getElementById('table--available-rooms-head')
 const availableRoomsTableBody = document.getElementById('table--available-rooms-body')
 const customerWelcome = document.getElementById('text--customer-message')
@@ -69,7 +64,7 @@ const onLoadPromises = () => {
         upcomingStaysTableBody.innerHTML += `<tr>
         <td>${booking.date}</td>
         <td>${booking.roomNumber}</td>
-        <td>${booking.id}    </td>
+        <td>${booking.id}   </td>
         <td>$${booking.price}</td>
         </tr>`
       })
@@ -207,7 +202,7 @@ const createNewBooking = (event) => {
   }
   Promise.all([addNewBooking(newBooking)])
     .then(data => onLoadPromises())
-  
+
   // show(customerDashboard)
 }
 
@@ -226,20 +221,38 @@ const customerLogin = () => {
 
 
 const displayLoginSection = () => {
-show(loginPageSection)
-show(loginContainer)
-hide(headerSection)
-hide(loginError)
-hide(customerDashboard)
-hide(filterRoomTypeForm)
-hide(availableRoomsTableBody)
-hide(availableRoomsTableHead)
-hide(noRoomsMessage)
-hide(newBookingSection)
+  show(loginPageSection)
+  show(loginContainer)
+  hide(headerSection)
+  hide(loginError)
+  hide(customerDashboard)
+  hide(filterRoomTypeForm)
+  hide(availableRoomsTableBody)
+  hide(availableRoomsTableHead)
+  hide(noRoomsMessage)
+  hide(newBookingSection)
+  hide(networkErrorSection)
 }
+
+const displayNetworkError = () => {
+  hide(loginPageSection)
+  hide(loginContainer)
+  hide(headerSection)
+  hide(loginError)
+  hide(customerDashboard)
+  hide(filterRoomTypeForm)
+  hide(availableRoomsTableBody)
+  hide(availableRoomsTableHead)
+  hide(noRoomsMessage)
+  hide(newBookingSection)
+  show(networkErrorSection)
+}
+
+
 
 // Event Listeners
 window.addEventListener('load', displayLoginSection)
+// window.addEventListener('load', displayNetworkError)
 bookRoomButton.addEventListener('click', displayNewBookingSection)
 dateSelector.addEventListener('input', (event) => {
   showAvailableRooms(event)
@@ -247,3 +260,5 @@ dateSelector.addEventListener('input', (event) => {
 roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
 availableRoomsTableBody.addEventListener('click', createNewBooking)
 loginButton.addEventListener('click', customerLogin)
+
+export default displayNetworkError
