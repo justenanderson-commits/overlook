@@ -1,8 +1,8 @@
 //Imports
-import './css/styles.css';
-import { getSingleCustomer, getAllBookings, getAllRooms, addNewBooking } from './api-calls';
-import Customer from './Customer';
-import Room from './Room';
+import './css/styles.css'
+import { getSingleCustomer, getAllBookings, getAllRooms, addNewBooking } from './api-calls'
+import Customer from './Customer'
+import Room from './Room'
 
 
 //Global Variables
@@ -22,9 +22,10 @@ const customerDashboard = document.getElementById('section--customer-dashboard')
 const newBookingSection = document.getElementById('section--new-booking')
 const noRoomsAvailableSection = document.getElementById('section--no-rooms-available')
 const loginPageSection = document.getElementById('section--login-page')
+const headerSection = document.getElementById('section--header')
+const networkErrorSection = document.getElementById('section--network-error')
 const upcomingStaysTableBody = document.getElementById('table--upcoming-stays-body')
 const previousStaysTableBody = document.getElementById('table--previous-stays-body')
-const networkErrorSection = document.getElementById('section--network-error')
 const availableRoomsTableHead = document.getElementById('table--available-rooms-head')
 const availableRoomsTableBody = document.getElementById('table--available-rooms-body')
 const customerWelcome = document.getElementById('text--customer-message')
@@ -36,10 +37,9 @@ const usernameInput = document.getElementById('input--username')
 const passwordInput = document.getElementById('input--password')
 const roomTypeDropDown = document.getElementById('button--room-type-drop-down')
 const bookRoomButton = document.getElementById('button--book-room')
-const filterRoomTypeForm = document.getElementById('form--room-filter')
-const headerSection = document.getElementById('section--header')
 const loginButton = document.getElementById('button--login')
 const loginError = document.getElementById('error--login-page')
+const filterRoomTypeForm = document.getElementById('form--room-filter')
 const loginContainer = document.getElementById('container--log-in')
 
 
@@ -50,20 +50,15 @@ const onLoadPromises = () => {
       singleCustomerData = data[0]
       allBookingsData = data[1].bookings
       allRoomsData = data[2].rooms
+
       customerBookings = allBookingsData.filter(booking => booking.userID == userID)
-      customer = new Customer(singleCustomerData)
-      customer.getNewBookings(customerBookings, today)
-      customer.getOldBookings(customerBookings, today)
-      customer.getCostOfEachNewBooking(allRoomsData)
-      customer.getCostOfEachOldBooking(allRoomsData)
-      customer.getTotalAmountToSpend()
-      customer.getTotalAmountSpent()
+      loadCustomerData(singleCustomerData, customerBookings, today, allRoomsData)
       upcomingStaysTableBody.innerHTML = ''
       customer.newBookings.forEach(booking => {
         upcomingStaysTableBody.innerHTML += `<tr>
         <td>${booking.date}</td>
         <td>${booking.roomNumber}</td>
-        <td>${booking.id}   </td>
+        <td>${booking.id}</td>
         <td>$${booking.price}</td>
         </tr>`
       })
@@ -78,20 +73,17 @@ const onLoadPromises = () => {
       })
       upcomingTotal.innerText = `Total $${customer.totalUpcomingCost}`
       previousTotal.innerText = `Total $${customer.totalPreviousCost}`
+      
       bookableRooms = [];
       allRoomsData.forEach(room => {
         room = new Room(room)
         room.getDatesBooked(allBookingsData)
         bookableRooms.push(room)
       })
-      loadCustomer()
-      hide(loginContainer)
-      hide(loginPageSection)
+      loadCustomerDashboard()
+      displayAvailableRoomsTable(hide)
+      displayLoginElements(hide)
       hide(newBookingSection)
-      hide(availableRoomsTableBody)
-      hide(loginError)
-      show(customerDashboard)
-      show(headerSection)
       dateSelector.min = `${year}-${month}-${day}`
     })
 }
@@ -103,24 +95,25 @@ const hide = element => element.classList.add('hidden')
 
 
 // Other functions
-const loadCustomer = () => customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
+const loadCustomerDashboard = () => {
+  customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
+  show(customerDashboard)
+  show(headerSection)
+}
 
 const displayNewBookingSection = () => {
-  hide(loginContainer)
-  hide(loginPageSection)
-  hide(loginError)
+  displayAvailableRoomsTable(hide)
+  displayLoginElements(hide)
   hide(customerDashboard)
   hide(filterRoomTypeForm)
-  hide(availableRoomsTableBody)
-  hide(availableRoomsTableHead)
   hide(noRoomsMessage)
   show(newBookingSection)
 }
 
 const getFilteredRoomsByDate = (event) => {
   let date = event.target.value
-  let [year, month, day] = date.split('-');
-  selectedDate = [year, month, day].join('/');
+  let [year, month, day] = date.split('-')
+  selectedDate = [year, month, day].join('/')
   filteredRoomsByDate = bookableRooms.filter(room => !room.datesBooked.includes(selectedDate))
   if (filteredRoomsByDate.length != 0) {
     return filteredRoomsByDate
@@ -132,26 +125,15 @@ const getFilteredRoomsByDate = (event) => {
 const showAvailableRooms = (event) => {
   getFilteredRoomsByDate(event)
   if (filteredRoomsByDate.length === 0) {
-    hide(availableRoomsTableHead)
-    hide(availableRoomsTableBody)
+    displayAvailableRoomsTable(hide)
     show(noRoomsMessage)
+
   } else {
-    show(availableRoomsTableHead)
-    show(availableRoomsTableBody)
+    displayAvailableRoomsTable(show)
     show(filterRoomTypeForm)
     availableRoomsTableBody.innerHTML = ''
     filteredRoomsByDate.forEach(room => {
-      availableRoomsTableBody.innerHTML += `
-        <tr>
-          <td>${room.number}</td>
-          <td>${room.roomType}</td>
-          <td>${room.bidet}</td>
-          <td>${room.BedSize}</td>
-          <td>${room.numBeds}</td>
-          <td>$${room.costPerNight}</td>
-          <td><button id="button--select-room" data-room="${room.number}">Select</button></td>
-        </tr>
-        `
+      updateRoomsTable(room)
     })
   }
 }
@@ -165,24 +147,14 @@ const getFilteredRoomsByType = (event) => {
 const showFilteredRoomsByType = (event) => {
   getFilteredRoomsByType(event)
   if (filteredRoomsByType.length === 0) {
-    hide(availableRoomsTableHead)
-    hide(availableRoomsTableBody)
-    show(noRoomsMessage)
+    displayFierceApology()
+
   } else if (event.target.value != 'any') {
     hide(noRoomsMessage)
-    show(availableRoomsTableHead)
-    show(availableRoomsTableBody)
+    displayAvailableRoomsTable(show)
     availableRoomsTableBody.innerHTML = ''
     filteredRoomsByType.forEach(room => {
-      availableRoomsTableBody.innerHTML += `
-        <tr>
-          <td>${room.number}</td>
-          <td>${room.roomType}</td>
-          <td>${room.bidet}</td>
-          <td>${room.BedSize}</td>
-          <td>${room.numBeds}</td>
-          <td>$${room.costPerNight}</td>
-          <td><button id="button--select-room" data-room="${room.number}">Select</button></td>`
+      updateRoomsTable(room)
     })
   } else {
     availableRoomsTableBody.innerHTML = ''
@@ -197,9 +169,7 @@ const createNewBooking = (event) => {
     'roomNumber': +event.target.dataset.room
   }
   Promise.all([addNewBooking(newBooking)])
-    .then(data => onLoadPromises())
-
-  // show(customerDashboard)
+    .then(data => onLoadPromises(data))
 }
 
 const customerLogin = () => {
@@ -216,37 +186,70 @@ const customerLogin = () => {
 }
 
 const displayLoginSection = () => {
-  show(loginPageSection)
-  show(loginContainer)
+  displayLoginElements(show)
+  displayAvailableRoomsTable(hide)
   hide(headerSection)
   hide(loginError)
   hide(customerDashboard)
   hide(filterRoomTypeForm)
-  hide(availableRoomsTableBody)
-  hide(availableRoomsTableHead)
   hide(noRoomsMessage)
   hide(newBookingSection)
   hide(networkErrorSection)
 }
 
 const displayNetworkError = () => {
-  hide(loginPageSection)
-  hide(loginContainer)
+  displayLoginElements(hide)
+  displayAvailableRoomsTable(hide)
   hide(headerSection)
-  hide(loginError)
   hide(customerDashboard)
   hide(filterRoomTypeForm)
-  hide(availableRoomsTableBody)
-  hide(availableRoomsTableHead)
   hide(noRoomsMessage)
   hide(newBookingSection)
   show(networkErrorSection)
 }
 
+const displayLoginElements = (toggle) => {
+  toggle(loginPageSection)
+  toggle(loginContainer)
+  toggle(loginError)
+}
+
+const updateRoomsTable = (room) => {
+  availableRoomsTableBody.innerHTML += `
+        <tr>
+          <td>${room.number}</td>
+          <td>${room.roomType}</td>
+          <td>${room.bidet}</td>
+          <td>${room.BedSize}</td>
+          <td>${room.numBeds}</td>
+          <td>$${room.costPerNight}</td>
+          <td><button id="button--select-room" data-room="${room.number}">Select</button></td>
+        </tr>
+        `
+}
+
+const displayFierceApology = () => {
+  displayAvailableRoomsTable(hide)
+  show(noRoomsMessage)
+}
+
+const displayAvailableRoomsTable = (toggle) => {
+  toggle(availableRoomsTableHead)
+  toggle(availableRoomsTableBody)
+}
+
+const loadCustomerData = () => {
+  customer = new Customer(singleCustomerData)
+  customer.getNewBookings(customerBookings, today)
+  customer.getOldBookings(customerBookings, today)
+  customer.getCostOfEachNewBooking(allRoomsData)
+  customer.getCostOfEachOldBooking(allRoomsData)
+  customer.getTotalAmountToSpend()
+  customer.getTotalAmountSpent()
+}
 
 // Event Listeners
 window.addEventListener('load', displayLoginSection)
-// window.addEventListener('load', displayNetworkError)
 bookRoomButton.addEventListener('click', displayNewBookingSection)
 dateSelector.addEventListener('input', (event) => showAvailableRooms(event))
 roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
