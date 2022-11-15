@@ -69,8 +69,8 @@ const onLoadPromises = () => {
         upcomingStaysTableBody.innerHTML += `<tr>
         <td>${booking.date}</td>
         <td>${booking.roomNumber}</td>
-        <td>${booking.id}</td>
-        <td>${booking.price}</td>
+        <td>${booking.id}    </td>
+        <td>$${booking.price}</td>
         </tr>`
       })
       previousStaysTableBody.innerHTML = ''
@@ -79,11 +79,11 @@ const onLoadPromises = () => {
         <td>${booking.date}</td>
         <td>${booking.roomNumber}</td>
         <td>${booking.id}</td>
-        <td>${booking.price}</td>
+        <td>$${booking.price}</td>
         </tr>`
       })
-      upcomingTotal.innerText = ` $${customer.totalUpcomingCost}`
-      previousTotal.innerText = ` $${customer.totalPreviousCost}`
+      upcomingTotal.innerText = `Total $${customer.totalUpcomingCost}`
+      previousTotal.innerText = `Total $${customer.totalPreviousCost}`
       bookableRooms = [];
       allRoomsData.forEach(room => {
         room = new Room(room)
