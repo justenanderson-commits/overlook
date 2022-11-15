@@ -1,6 +1,5 @@
 //Imports
 import './css/styles.css';
-import './images/turing-logo.png';
 import { getSingleCustomer, getAllBookings, getAllRooms, addNewBooking } from './api-calls';
 import Customer from './Customer';
 import Room from './Room';
@@ -23,14 +22,9 @@ const customerDashboard = document.getElementById('section--customer-dashboard')
 const newBookingSection = document.getElementById('section--new-booking')
 const noRoomsAvailableSection = document.getElementById('section--no-rooms-available')
 const loginPageSection = document.getElementById('section--login-page')
-const upcomingStaysTable = document.getElementById('table--upcoming-stays-body')
-
-
-const upcomingStaysTableHead = document.getElementById('table--upcoming-stays-head')
-const previousStaysTable = document.getElementById('table--previous-stays-body')
-const previousStaysTableHead = document.getElementById('table--previous-stays-head')
-
-
+const upcomingStaysTableBody = document.getElementById('table--upcoming-stays-body')
+const previousStaysTableBody = document.getElementById('table--previous-stays-body')
+const networkErrorSection = document.getElementById('section--network-error')
 const availableRoomsTableHead = document.getElementById('table--available-rooms-head')
 const availableRoomsTableBody = document.getElementById('table--available-rooms-body')
 const customerWelcome = document.getElementById('text--customer-message')
@@ -48,15 +42,11 @@ const loginButton = document.getElementById('button--login')
 const loginError = document.getElementById('error--login-page')
 const loginContainer = document.getElementById('container--log-in')
 
-// Customer input
-userID = 48
 
-
-// Promises - REMOVE HARD CODING WHEN THESE ARE WORKING:
+// Promises
 const onLoadPromises = () => {
   Promise.all([getSingleCustomer(userID), getAllBookings(), getAllRooms()])
     .then(data => {
-      // singleCustomerData is harded-coded
       singleCustomerData = data[0]
       allBookingsData = data[1].bookings
       allRoomsData = data[2].rooms
@@ -68,26 +58,26 @@ const onLoadPromises = () => {
       customer.getCostOfEachOldBooking(allRoomsData)
       customer.getTotalAmountToSpend()
       customer.getTotalAmountSpent()
-      upcomingStaysTable.innerHTML = ''
+      upcomingStaysTableBody.innerHTML = ''
       customer.newBookings.forEach(booking => {
-        upcomingStaysTable.innerHTML += `<tr>
+        upcomingStaysTableBody.innerHTML += `<tr>
         <td>${booking.date}</td>
         <td>${booking.roomNumber}</td>
-        <td>${booking.id}</td>
-        <td>${booking.price}</td>
+        <td>${booking.id}   </td>
+        <td>$${booking.price}</td>
         </tr>`
       })
-      previousStaysTable.innerHTML = ''
+      previousStaysTableBody.innerHTML = ''
       customer.oldBookings.forEach(booking => {
-        previousStaysTable.innerHTML += `<tr>
+        previousStaysTableBody.innerHTML += `<tr>
         <td>${booking.date}</td>
         <td>${booking.roomNumber}</td>
         <td>${booking.id}</td>
-        <td>${booking.price}</td>
+        <td>$${booking.price}</td>
         </tr>`
       })
-      upcomingTotal.innerText = ` $${customer.totalUpcomingCost}`
-      previousTotal.innerText = ` $${customer.totalPreviousCost}`
+      upcomingTotal.innerText = `Total $${customer.totalUpcomingCost}`
+      previousTotal.innerText = `Total $${customer.totalPreviousCost}`
       bookableRooms = [];
       allRoomsData.forEach(room => {
         room = new Room(room)
@@ -113,8 +103,6 @@ const hide = element => element.classList.add('hidden')
 
 
 // Other functions
-
-
 const loadCustomer = () => customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
 
 const displayNewBookingSection = () => {
@@ -196,7 +184,6 @@ const showFilteredRoomsByType = (event) => {
           <td>$${room.costPerNight}</td>
           <td><button id="button--select-room" data-room="${room.number}">Select</button></td>`
     })
-
   } else {
     availableRoomsTableBody.innerHTML = ''
     showAvailableRooms(event)
@@ -211,7 +198,7 @@ const createNewBooking = (event) => {
   }
   Promise.all([addNewBooking(newBooking)])
     .then(data => onLoadPromises())
-  
+
   // show(customerDashboard)
 }
 
@@ -228,26 +215,43 @@ const customerLogin = () => {
   }
 }
 
-
 const displayLoginSection = () => {
-show(loginPageSection)
-show(loginContainer)
-hide(headerSection)
-hide(loginError)
-hide(customerDashboard)
-hide(filterRoomTypeForm)
-hide(availableRoomsTableBody)
-hide(availableRoomsTableHead)
-hide(noRoomsMessage)
-hide(newBookingSection)
+  show(loginPageSection)
+  show(loginContainer)
+  hide(headerSection)
+  hide(loginError)
+  hide(customerDashboard)
+  hide(filterRoomTypeForm)
+  hide(availableRoomsTableBody)
+  hide(availableRoomsTableHead)
+  hide(noRoomsMessage)
+  hide(newBookingSection)
+  hide(networkErrorSection)
 }
+
+const displayNetworkError = () => {
+  hide(loginPageSection)
+  hide(loginContainer)
+  hide(headerSection)
+  hide(loginError)
+  hide(customerDashboard)
+  hide(filterRoomTypeForm)
+  hide(availableRoomsTableBody)
+  hide(availableRoomsTableHead)
+  hide(noRoomsMessage)
+  hide(newBookingSection)
+  show(networkErrorSection)
+}
+
 
 // Event Listeners
 window.addEventListener('load', displayLoginSection)
+// window.addEventListener('load', displayNetworkError)
 bookRoomButton.addEventListener('click', displayNewBookingSection)
-dateSelector.addEventListener('input', (event) => {
-  showAvailableRooms(event)
-});
+dateSelector.addEventListener('input', (event) => showAvailableRooms(event))
 roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
 availableRoomsTableBody.addEventListener('click', createNewBooking)
 loginButton.addEventListener('click', customerLogin)
+
+
+export default displayNetworkError

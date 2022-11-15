@@ -12,12 +12,9 @@ button {
   color: #FFFFFF
 }
 
-h1 {
-  display: flex;
-  justify-content: center;
-}
-
-h2, h3 {
+h1,
+h2,
+h3 {
   display: flex;
   justify-content: center;
 }
@@ -26,23 +23,22 @@ header {
   background-color: rgb(244, 234, 218);
 }
 
-.error--login-page {
-  color: red;
+th,
+td {
+  padding-left: 5%;
+  margin: auto;
+  text-align: center;
 }
 
-.container--date-picker, .dropdown {
+.button--book-room {
+  margin-left: 2%
+}
+
+.container--date-picker {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-}
-
-.section--customer-dashboard {
-background-color: rgb(231, 231, 231);
-}
-
-.section--new-booking {
-  background-color: rgb(231, 231, 231);
 }
 
 .container--log-in {
@@ -52,7 +48,9 @@ background-color: rgb(231, 231, 231);
   margin: 1% auto 1% auto;
 }
 
-.container--make-new-booking {
+.container--make-new-booking,
+.container--customer-stays,
+.section--new-booking {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -60,22 +58,31 @@ background-color: rgb(231, 231, 231);
   background-color: rgb(231, 231, 231);
 }
 
-.text--previous-total, .text--upcoming-total {
+.error--login-page {
+  color: red;
+}
+
+.form--room-filter {
+  margin: 2%;
   display: flex;
-  justify-content: center;
+  align-items: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.section--network-error {
+  color: red;
+  margin-top: 20%;
 }
 
 .text--customer-message {
   padding-left: 2%;
 }
 
-.table--upcoming-stays, .table--previous-stays {
+.text--previous-total,
+.text--upcoming-total {
   display: flex;
   justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-
-.hidden {
-  display: none;
 }
