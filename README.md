@@ -1,12 +1,8 @@
-[GitHub Pages](https://pages.github.com/) is a great way to deploy your project to the web. Don't worry about this until your project is free of bugs and well tested!
-
-If you _are_ done, you can follow [this procedure](./gh-pages-procedure.md) to get your project live on GitHub Pages.
-
 # Overlook Hotel - Final Solo Project
 ## Abstract:
 This application is the final solo project for Mod 2. Guests can sign in, see their upcoming and previous bookings, and make a new booking. All booking, room, and customer data are fetched from, and posted to, an API. 
 
-<!-- Insert screenshots/gif here -->
+https://user-images.githubusercontent.com/104015966/201999724-da415f62-c440-42df-ba76-b7389fe3cd6d.mp4
 
 ## Installation Instructions:
 1. Go to [this repo](https://github.com/justenanderson-commits/overlook) on Github
