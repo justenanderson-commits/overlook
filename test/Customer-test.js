@@ -27,10 +27,12 @@ describe('Customer', () => {
 
   it('should return the customer name', () => {
     expect(customer.name).to.equal('Kaylee Hermann')
+    expect(customer2.name).to.equal('John Customer')
   })
 
   it('should return the customerID', () => {
     expect(customer.id).to.equal(48)
+    expect(customer2.id).to.equal(60)
   })
 
   it('should have an array of upcoming bookings', () => {
