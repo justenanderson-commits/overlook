@@ -53,7 +53,6 @@ td {
   flex-direction: column;
   align-items: center;
   width: 25vw;
-  height: 14vh;
 }
 
 .container--log-in {
@@ -102,7 +101,7 @@ td {
 .section--login-page {
   background-color: #FFFFFF;
   border-radius: 8%;
-  margin: 15% auto 30% auto;
+  margin: auto;
   padding: 2%;
   height: 300%;
 }
