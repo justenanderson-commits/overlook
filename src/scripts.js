@@ -16,6 +16,8 @@ let month = date.getMonth() + 1
 let year = date.getFullYear()
 today = `${year}/${month}/${day}`
 
+// Random customer finder
+userID = Math.floor(Math.random() * 50)
 
 // Query Selectors
 const customerDashboard = document.getElementById('section--customer-dashboard')
@@ -33,11 +35,12 @@ const upcomingTotal = document.getElementById('text--upcoming-total')
 const previousTotal = document.getElementById('text--previous-total')
 const noRoomsMessage = document.getElementById('text--no-rooms-available')
 const dateSelector = document.getElementById('input--date-selection')
-const usernameInput = document.getElementById('input--username')
-const passwordInput = document.getElementById('input--password')
+// const usernameInput = document.getElementById('input--username')
+// const passwordInput = document.getElementById('input--password')
 const roomTypeDropDown = document.getElementById('button--room-type-drop-down')
 const bookRoomButton = document.getElementById('button--book-room')
-const loginButton = document.getElementById('button--login')
+// const loginButton = document.getElementById('button--login')
+const myBookingsButton = document.getElementById('button--my-bookings')
 const loginError = document.getElementById('error--login-page')
 const filterRoomTypeForm = document.getElementById('form--room-filter')
 const loginContainer = document.getElementById('container--log-in')
@@ -84,6 +87,7 @@ const onLoadPromises = () => {
       displayAvailableRoomsTable(hide)
       displayLoginElements(hide)
       hide(newBookingSection)
+      hide(networkErrorSection)
       dateSelector.min = `${year}-${month}-${day}`
     })
 }
@@ -97,6 +101,7 @@ const hide = element => element.classList.add('hidden')
 // Other functions
 const loadCustomerDashboard = () => {
   customerWelcome.innerHTML = `<p>Welcome, ${customer.name}!</p>`
+  hide(newBookingSection)
   show(customerDashboard)
   show(headerSection)
 }
@@ -172,30 +177,30 @@ const createNewBooking = (event) => {
     .then(data => onLoadPromises(data))
 }
 
-const customerLogin = () => {
-  let username = usernameInput.value
-  let nameOnly = username.slice(0, 8)
-  userID = username.slice(8)
-  if (nameOnly === 'customer' && userID < 51 && userID > 0 && passwordInput.value === 'overlook2021') {
-    onLoadPromises()
-    hide(loginPageSection)
-    show(customerDashboard)
-  } else {
-    show(loginError)
-  }
-}
+// const customerLogin = () => {
+//   let username = usernameInput.value
+//   let nameOnly = username.slice(0, 8)
+//   // userID = username.slice(8)
+//   if (nameOnly === 'customer' && userID < 51 && userID > 0 && passwordInput.value === 'overlook2021') {
+//     onLoadPromises()
+//     hide(loginPageSection)
+//     show(customerDashboard)
+//   } else {
+//     show(loginError)
+//   }
+// }
 
-const displayLoginSection = () => {
-  displayLoginElements(show)
-  displayAvailableRoomsTable(hide)
-  hide(headerSection)
-  hide(loginError)
-  hide(customerDashboard)
-  hide(filterRoomTypeForm)
-  hide(noRoomsMessage)
-  hide(newBookingSection)
-  hide(networkErrorSection)
-}
+// const displayLoginSection = () => {
+//   displayLoginElements(show)
+//   displayAvailableRoomsTable(hide)
+//   hide(headerSection)
+//   hide(loginError)
+//   hide(customerDashboard)
+//   hide(filterRoomTypeForm)
+//   hide(noRoomsMessage)
+//   hide(newBookingSection)
+//   hide(networkErrorSection)
+// }
 
 const displayNetworkError = () => {
   displayLoginElements(hide)
@@ -249,12 +254,14 @@ const loadCustomerData = () => {
 }
 
 // Event Listeners
-window.addEventListener('load', displayLoginSection)
+// window.addEventListener('load', displayLoginSection)
+window.addEventListener('load', onLoadPromises)
 bookRoomButton.addEventListener('click', displayNewBookingSection)
 dateSelector.addEventListener('input', (event) => showAvailableRooms(event))
 roomTypeDropDown.addEventListener('change', showFilteredRoomsByType)
 availableRoomsTableBody.addEventListener('click', createNewBooking)
-loginButton.addEventListener('click', customerLogin)
+// loginButton.addEventListener('click', customerLogin)
+myBookingsButton.addEventListener('click', loadCustomerDashboard) 
 
 
 export default displayNetworkError
