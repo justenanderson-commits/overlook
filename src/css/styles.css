@@ -17,6 +17,7 @@ body {
 }
 
 button {
+  border: 1px solid grey;
   background-color: #252525;
   font-size: 1em;
   color: #FFFFFF
@@ -120,6 +121,10 @@ td {
   color: #efefef
 }
 
+.nav--buttons {
+  padding-right: 1%;
+}
+
 .section--network-error {
   color: red;
   margin-top: 20%;
@@ -144,4 +149,8 @@ td {
 .text--upcoming-total {
   display: flex;
   justify-content: center;
+}
+
+.title--header {
+  color: white;
 }
