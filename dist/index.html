@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Overlook Hotel</title>
 </head>
+
 <body>
   <header id="section--header">
-    <p id="text--customer-message" class="text--customer-message">Welcome, customer!</p>
-    <h1>Overlook Hotel</h1>
+    <nav class="nav--bar">
+      <p id="text--customer-message" class="text--customer-message">Welcome, customer!</p>
+      <div class="nav--buttons">
+        <button id="button--my-bookings">My bookings</button>
+        <button id="button--book-room">New Reservation</button>
+      </div>
+    </nav>
+    <h1 class="title--header">Overlook Hotel</h1>
   </header>
   <section id="section--network-error" class="section--network-error">
     <h1>We seem to be have trouble connecting to the Overlook. Please try again later.</h1>
@@ -17,19 +25,19 @@
   <main>
     <section id="section--login-page" class="section--login-page">
       <h2 class="text--login-welcome">Welcome to the Overlook. Please sign in.</h3>
-      <container id="container--log-in" class="container--log-in">
-        <label>Guest username</label>
-        <input id="input--username" placeholder="username">
-        <br>
-        <label>Guest password</label>
-        <input id="input--password" placeholder="password">
-        <br>
-        <button id="button--login">Log In</button>
-        <p id="error--login-page" class="error--login-page">Username and password do not match. Please try again.</p>
-      </container>
+        <container id="container--log-in" class="container--log-in">
+          <label>Guest username</label>
+          <input id="input--username" placeholder="username">
+          <br>
+          <label>Guest password</label>
+          <input id="input--password" placeholder="password">
+          <br>
+          <button id="button--login">Log In</button>
+          <p id="error--login-page" class="error--login-page">Username and password do not match. Please try again.</p>
+        </container>
     </section>
     <section id="section--customer-dashboard" class="section--customer-dashboard">
-      <button id="button--book-room" class="button--book-room">Book a Room</button>
+      <!-- <button id="button--book-room" class="button--book-room">Book a Room</button> -->
       <container class="container--customer-stays">
         <h2>Upcoming Stays</h2>
         <table class="table--upcoming-stays">
@@ -62,7 +70,7 @@
       </container>
     </section>
     <section id="section--new-booking" class="section--new-booking">
-      <button id="button--my-bookings">Back to My Bookings</button>
+      <!-- <button>Back to My Bookings</button> -->
       <h3>Book a Room</h3>
       <container id="container--make-new-booking" class="container--make-new-booking">
         <container class="container--date-picker">
@@ -91,7 +99,8 @@
               <th>Book it</th>
             </tr>
           </thead>
-          <h4 id="text--no-rooms-available">We are fiercely sorry there are no rooms available. Please select a different room type.</h4>
+          <h4 id="text--no-rooms-available">We are fiercely sorry there are no rooms available. Please select a
+            different room type.</h4>
           <tbody id="table--available-rooms-body">
           </tbody>
       </container>
@@ -99,4 +108,5 @@
   </main>
   <script src="bundle.js"></script>
 </body>
+
 </html>
