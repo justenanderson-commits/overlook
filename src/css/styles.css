@@ -1,4 +1,12 @@
 /* Elements */
+* {
+  box-sizing: border-box;
+  border: 1px black solid
+}
+
+/* Header Effects */
+
+
 body {
   background: linear-gradient(180deg, #ffffff, #999999);
   background-repeat: no-repeat;
@@ -21,14 +29,17 @@ h3 {
 }
 
 header {
-  background-color: rgb(244, 234, 218);
-  max-height: 50%;
+  background-image: url(../images/overlook-header-image.jpg);
+  background-position: bottom;
+  background-size: cover;
+  /* max-height: 90%; */
+  min-height: 25vh;
 }
 
 main {
   display: flex;
   justify-content: center;
-  min-height: 100vh;
+  min-height: 75vh;
 }
 
 table {

@@ -1,6 +1,7 @@
 // NOTE: Commented-out code refers to a login functionality that was originally part of this project. 
 
 //Imports
+import './images/overlook-header-image.jpg'
 import './css/styles.css'
 import { getSingleCustomer, getAllBookings, getAllRooms, addNewBooking } from './api-calls'
 import Customer from './Customer'
